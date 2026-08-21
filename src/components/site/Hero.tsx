@@ -19,6 +19,8 @@ export function Hero() {
         alt="Mehta Automobile multi-brand car workshop in Jagatpura, Jaipur with cars on service lifts"
         width={1920}
         height={1088}
+        fetchPriority="high"
+        decoding="async"
         className="absolute inset-0 -z-20 h-full w-full object-cover"
       />
       <div className="bg-gradient-hero absolute inset-0 -z-10" />

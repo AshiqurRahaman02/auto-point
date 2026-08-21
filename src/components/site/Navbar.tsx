@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Menu, Phone, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { SITE, whatsappLink } from "@/lib/site";
+import { SITE } from "@/lib/site";
 import { useScrollProgress } from "@/hooks/use-reveal";
 import { cn } from "@/lib/utils";
 
@@ -87,9 +87,7 @@ export function Navbar() {
               </a>
             </Button>
             <Button asChild variant="brand" size="lg" className="hidden sm:inline-flex">
-              <a href={whatsappLink(`Hello ${SITE.name}, I would like to book a service.`)}>
-                Book Service
-              </a>
+              <a href="#booking">Book Service</a>
             </Button>
             <button
               type="button"
@@ -126,8 +124,8 @@ export function Navbar() {
             ))}
             <li className="px-3 pt-2 pb-4">
               <Button asChild variant="brand" size="lg" className="w-full">
-                <a href={whatsappLink(`Hello ${SITE.name}, I would like to book a service.`)}>
-                  Book on WhatsApp
+                <a href="#booking" onClick={() => setOpen(false)}>
+                  Book Service
                 </a>
               </Button>
             </li>

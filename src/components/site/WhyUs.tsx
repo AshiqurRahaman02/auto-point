@@ -32,7 +32,9 @@ export function WhyUs() {
       <div className="mt-14 grid gap-6 lg:grid-cols-2">
         <div className="reveal glass-card rounded-3xl border-brand/30 p-8">
           <h3 className="font-display text-xl font-bold text-foreground">Mehta Automobile</h3>
-          <p className="mt-1 text-sm text-muted-foreground">What every customer gets, every time.</p>
+          <p className="mt-1 text-sm text-muted-foreground">
+            What every customer gets, every time.
+          </p>
           <ul className="mt-6 space-y-3">
             {OURS.map((item) => (
               <li key={item} className="flex items-center gap-3 rounded-xl bg-surface p-3">

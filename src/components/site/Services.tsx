@@ -17,18 +17,66 @@ import { Button } from "@/components/ui/button";
 import { SITE, whatsappLink } from "@/lib/site";
 
 const SERVICES = [
-  { icon: Droplets, title: "Car Washing", desc: "Foam wash, underbody cleaning and interior vacuum for a showroom-fresh finish." },
-  { icon: Cog, title: "Periodic Maintenance", desc: "Scheduled service with oil, filters and multi-point inspection as per brand norms." },
-  { icon: Gauge, title: "Engine Diagnostics", desc: "Computerised scanning to pinpoint faults before they become expensive repairs." },
-  { icon: Disc3, title: "Brake Repair", desc: "Pad, disc and brake fluid service for confident, noise-free stopping power." },
-  { icon: CarFront, title: "Suspension Repair", desc: "Shockers, bushes and linkage work that restores ride comfort on Jaipur roads." },
-  { icon: Snowflake, title: "AC Service", desc: "Gas top-up, cooling coil cleaning and complete AC performance checks." },
-  { icon: PaintBucket, title: "Denting & Painting", desc: "Panel straightening with computerised shade matching and oven-cured paint." },
-  { icon: FileCheck2, title: "Insurance Claim Assistance", desc: "End-to-end paperwork support and surveyor coordination for cashless claims." },
-  { icon: Sparkles, title: "Car Detailing", desc: "Paint correction, ceramic-grade polish and deep interior detailing." },
-  { icon: Brush, title: "Wheel Alignment", desc: "Precision alignment and balancing for even tyre wear and stable steering." },
-  { icon: Battery, title: "Battery Replacement", desc: "Load testing and genuine battery replacement with on-the-spot fitment." },
-  { icon: Truck, title: "Pickup & Drop Service", desc: "We collect your car from home or office and deliver it back after service." },
+  {
+    icon: Droplets,
+    title: "Car Washing",
+    desc: "Foam wash, underbody cleaning and interior vacuum for a showroom-fresh finish.",
+  },
+  {
+    icon: Cog,
+    title: "Periodic Maintenance",
+    desc: "Scheduled service with oil, filters and multi-point inspection as per brand norms.",
+  },
+  {
+    icon: Gauge,
+    title: "Engine Diagnostics",
+    desc: "Computerised scanning to pinpoint faults before they become expensive repairs.",
+  },
+  {
+    icon: Disc3,
+    title: "Brake Repair",
+    desc: "Pad, disc and brake fluid service for confident, noise-free stopping power.",
+  },
+  {
+    icon: CarFront,
+    title: "Suspension Repair",
+    desc: "Shockers, bushes and linkage work that restores ride comfort on Jaipur roads.",
+  },
+  {
+    icon: Snowflake,
+    title: "AC Service",
+    desc: "Gas top-up, cooling coil cleaning and complete AC performance checks.",
+  },
+  {
+    icon: PaintBucket,
+    title: "Denting & Painting",
+    desc: "Panel straightening with computerised shade matching and oven-cured paint.",
+  },
+  {
+    icon: FileCheck2,
+    title: "Insurance Claim Assistance",
+    desc: "End-to-end paperwork support and surveyor coordination for cashless claims.",
+  },
+  {
+    icon: Sparkles,
+    title: "Car Detailing",
+    desc: "Paint correction, ceramic-grade polish and deep interior detailing.",
+  },
+  {
+    icon: Brush,
+    title: "Wheel Alignment",
+    desc: "Precision alignment and balancing for even tyre wear and stable steering.",
+  },
+  {
+    icon: Battery,
+    title: "Battery Replacement",
+    desc: "Load testing and genuine battery replacement with on-the-spot fitment.",
+  },
+  {
+    icon: Truck,
+    title: "Pickup & Drop Service",
+    desc: "We collect your car from home or office and deliver it back after service.",
+  },
 ];
 
 export function Services() {

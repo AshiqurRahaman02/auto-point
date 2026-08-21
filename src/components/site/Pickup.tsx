@@ -4,11 +4,27 @@ import { Button } from "@/components/ui/button";
 import { SITE, whatsappLink } from "@/lib/site";
 
 const STEPS = [
-  { icon: CalendarCheck, title: "Schedule on WhatsApp", desc: "Share your car and preferred time slot." },
+  {
+    icon: CalendarCheck,
+    title: "Schedule on WhatsApp",
+    desc: "Share your car and preferred time slot.",
+  },
   { icon: Truck, title: "Vehicle Pickup", desc: "Our driver collects the car from your doorstep." },
-  { icon: ClipboardList, title: "Expert Inspection", desc: "Multi-point check and a clear estimate before work starts." },
-  { icon: Wrench, title: "Service & Repair", desc: "Trained technicians with genuine parts support." },
-  { icon: CheckCircle2, title: "Quality Check", desc: "Road test and final inspection by the supervisor." },
+  {
+    icon: ClipboardList,
+    title: "Expert Inspection",
+    desc: "Multi-point check and a clear estimate before work starts.",
+  },
+  {
+    icon: Wrench,
+    title: "Service & Repair",
+    desc: "Trained technicians with genuine parts support.",
+  },
+  {
+    icon: CheckCircle2,
+    title: "Quality Check",
+    desc: "Road test and final inspection by the supervisor.",
+  },
   { icon: Car, title: "Vehicle Delivered", desc: "Washed, sanitised and delivered back on time." },
 ];
 
