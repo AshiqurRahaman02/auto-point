@@ -1,53 +1,39 @@
-import { BadgeCheck, Clock, ShieldCheck, Wrench } from "lucide-react";
 import { useCountUp } from "@/hooks/use-reveal";
 
 const STATS = [
-  { value: 5000, suffix: "+", label: "Cars Serviced", icon: Wrench },
-  { value: 10, suffix: "+", label: "Years Experience", icon: Clock },
-  { value: 98, suffix: "%", label: "Customer Satisfaction", icon: BadgeCheck },
-  { value: 100, suffix: "%", label: "Transparent Pricing", icon: ShieldCheck },
-];
+  { value: 11, label: "Multi-Brand", sub: "Car Care" },
+  { value: 8, label: "Complete", sub: "Service Solutions" },
+  { value: 24, label: "Availability", sub: "Listed hours" },
+  { value: 1, label: "One Stop", sub: "Car Care Center" },
+] as const;
 
-function Stat({
-  value,
-  suffix,
-  label,
-  icon: Icon,
-  delay,
-}: {
-  value: number;
-  suffix: string;
-  label: string;
-  icon: typeof Wrench;
-  delay: number;
-}) {
+function Stat({ value, label, sub }: { value: number; label: string; sub: string }) {
   const { ref, value: current } = useCountUp(value);
+  const shown =
+    value === 24
+      ? `${current}/7`
+      : value === 8 || value === 1
+        ? String(current).padStart(2, "0")
+        : String(current);
+
   return (
-    <div
-      className="reveal glass-card group rounded-2xl p-6 text-center transition-smooth hover:-translate-y-1 hover:shadow-lift"
-      style={{ "--reveal-delay": `${delay}ms` } as React.CSSProperties}
-    >
-      <span className="bg-gradient-blue mx-auto flex size-12 items-center justify-center rounded-xl text-accent-foreground shadow-soft transition-smooth group-hover:scale-110">
-        <Icon className="size-5" />
-      </span>
-      <p className="mt-4 font-display text-3xl font-extrabold text-foreground sm:text-4xl">
-        <span ref={ref}>{current}</span>
-        {suffix}
+    <div className="border-white/10 px-4 py-12 text-center sm:border-l sm:first:border-l-0">
+      <p className="font-display text-5xl text-brand sm:text-6xl">
+        <span ref={ref}>{shown}</span>
       </p>
-      <p className="mt-1 text-sm font-medium text-muted-foreground">{label}</p>
+      <p className="mt-3 font-display text-xl">{label}</p>
+      <p className="mt-1 text-[11px] tracking-[0.2em] text-muted-foreground uppercase">{sub}</p>
     </div>
   );
 }
 
 export function TrustStats() {
   return (
-    <section className="relative z-10 -mt-16 pb-4">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-          {STATS.map((s, i) => (
-            <Stat key={s.label} {...s} delay={i * 90} />
-          ))}
-        </div>
+    <section className="border-y border-white/10 bg-surface">
+      <div className="mx-auto grid max-w-7xl grid-cols-2 sm:grid-cols-4">
+        {STATS.map((stat) => (
+          <Stat key={stat.label} value={stat.value} label={stat.label} sub={stat.sub} />
+        ))}
       </div>
     </section>
   );

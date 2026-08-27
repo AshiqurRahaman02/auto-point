@@ -4,33 +4,27 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Section, SectionHeading } from "./Section";
 import { FAQS } from "@/lib/site";
 
 export function Faq() {
   return (
-    <Section id="faqs" className="bg-surface">
-      <SectionHeading
-        eyebrow="FAQs"
-        title="Questions Car Owners Ask First"
-        description="Straight answers before you book. Still unsure? WhatsApp us and we will guide you."
-      />
-      <Accordion type="single" collapsible className="reveal mx-auto mt-12 max-w-3xl">
-        {FAQS.map((faq, i) => (
-          <AccordionItem
-            key={faq.q}
-            value={`faq-${i}`}
-            className="mb-3 rounded-2xl border border-border bg-card px-5 shadow-soft"
-          >
-            <AccordionTrigger className="font-display text-base font-semibold hover:no-underline">
-              {faq.q}
-            </AccordionTrigger>
-            <AccordionContent className="text-sm leading-relaxed text-muted-foreground">
-              {faq.a}
-            </AccordionContent>
-          </AccordionItem>
-        ))}
-      </Accordion>
-    </Section>
+    <section id="faqs" className="bg-surface py-24">
+      <div className="mx-auto max-w-3xl px-4 sm:px-6">
+        <div className="reveal mb-10">
+          <p className="text-[11px] tracking-[0.28em] text-brand uppercase">FAQ</p>
+          <h2 className="mt-3 font-display text-4xl sm:text-5xl">Questions, answered.</h2>
+        </div>
+        <Accordion type="single" collapsible className="reveal">
+          {FAQS.map((item, i) => (
+            <AccordionItem key={item.q} value={`q-${i}`} className="border-white/10">
+              <AccordionTrigger className="text-left font-display text-lg tracking-wide hover:no-underline">
+                {item.q}
+              </AccordionTrigger>
+              <AccordionContent className="text-muted-foreground">{item.a}</AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
+      </div>
+    </section>
   );
 }

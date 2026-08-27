@@ -1,91 +1,73 @@
-import { MapPin, MessageCircle, Phone, Star } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { SITE, mapsDirections, whatsappLink } from "@/lib/site";
-import heroImage from "@/assets/hero-workshop.jpg";
+import { Phone } from "lucide-react";
 
-const TRUST_POINTS = [
-  "Multi-Brand Workshop",
-  "Pickup & Drop Available",
-  "Experienced Technicians",
-  "Genuine Parts Support",
-  "On-Time Delivery",
-];
+import { Button } from "@/components/ui/button";
+import { BOOKING_MESSAGE, IMG, SITE, whatsappLink } from "@/lib/site";
 
 export function Hero() {
   return (
-    <section id="home" className="relative isolate min-h-screen overflow-hidden">
+    <section id="home" className="relative h-[100svh] min-h-[640px] overflow-hidden bg-background">
       <img
-        src={heroImage}
-        alt="Mehta Automobile multi-brand car workshop in Jagatpura, Jaipur with cars on service lifts"
-        width={1920}
-        height={1088}
+        src={IMG.hero}
+        alt="Performance cars in a premium multi-brand service center"
+        width={2200}
+        height={1400}
         fetchPriority="high"
         decoding="async"
-        className="absolute inset-0 -z-20 h-full w-full object-cover"
+        className="animate-ken absolute inset-0 h-full w-full object-cover"
       />
-      <div className="bg-gradient-hero absolute inset-0 -z-10" />
-      <div className="absolute inset-x-0 bottom-0 -z-10 h-40 bg-gradient-to-t from-background to-transparent" />
+      <div className="hero-overlay absolute inset-0 bg-gradient-to-r from-background via-background/75 to-background/25" />
+      <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/30" />
 
-      <div className="mx-auto flex min-h-screen max-w-7xl flex-col justify-center px-4 pt-28 pb-24 sm:px-6 lg:px-8">
-        <div className="max-w-3xl">
-          <span className="glass-panel reveal inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-semibold tracking-wide text-primary-foreground uppercase">
-            <Star className="size-3.5 fill-brand text-brand" />
-            4.3 Google Rating · {SITE.tagline}
-          </span>
-
-          <h1
-            className="reveal mt-6 font-display text-4xl leading-[1.05] font-extrabold text-primary-foreground sm:text-6xl lg:text-7xl"
-            style={{ "--reveal-delay": "80ms" } as React.CSSProperties}
+      <div className="relative mx-auto flex h-full max-w-7xl flex-col justify-end px-4 pb-24 sm:px-6 md:justify-center md:pb-0">
+        <p className="hero-fade text-[11px] font-medium tracking-[0.32em] text-brand uppercase">
+          Multi-Brand Automotive Care
+        </p>
+        <h1
+          className="hero-rise mt-5 max-w-3xl font-display text-5xl leading-[0.9] font-semibold sm:text-7xl lg:text-8xl"
+          style={{ animationDelay: "180ms" }}
+        >
+          Your Car Deserves
+          <br />
+          Better Care.
+        </h1>
+        <p
+          className="hero-fade mt-6 max-w-xl text-base text-foreground/75 sm:text-lg"
+          style={{ animationDelay: "380ms" }}
+        >
+          Professional service, repairs and complete car care — handled by experienced technicians
+          under one roof.
+        </p>
+        <div className="hero-rise mt-8 flex flex-wrap gap-3" style={{ animationDelay: "560ms" }}>
+          <Button
+            asChild
+            className="h-12 rounded-none bg-brand px-7 text-brand-foreground hover:bg-brand/90"
           >
-            Premium Car Care <span className="text-gradient-brand">You Can Trust</span>
-          </h1>
-
-          <p
-            className="reveal mt-6 max-w-2xl text-base text-primary-foreground/80 sm:text-lg"
-            style={{ "--reveal-delay": "160ms" } as React.CSSProperties}
+            <a href={whatsappLink(BOOKING_MESSAGE)} target="_blank" rel="noopener noreferrer">
+              Book a Service
+            </a>
+          </Button>
+          <Button
+            asChild
+            variant="outline"
+            className="h-12 rounded-none border-white/25 bg-transparent px-7 text-foreground hover:bg-white/10"
           >
-            Expert Repairs, Professional Service, Pickup &amp; Drop Facility, and On-Time Delivery
-            for Every Vehicle.
-          </p>
-
-          <div
-            className="reveal mt-8 flex flex-wrap gap-3"
-            style={{ "--reveal-delay": "240ms" } as React.CSSProperties}
-          >
-            <Button asChild variant="brand" size="xl">
-              <a href={whatsappLink(`Hello ${SITE.name}, I would like to book a car service.`)}>
-                <MessageCircle /> Book on WhatsApp
-              </a>
-            </Button>
-            <Button asChild variant="heroGhost" size="xl">
-              <a href={SITE.telHref}>
-                <Phone /> Call Now
-              </a>
-            </Button>
-            <Button asChild variant="heroGhost" size="xl" className="hidden sm:inline-flex">
-              <a href={mapsDirections} target="_blank" rel="noreferrer">
-                <MapPin /> Visit Workshop
-              </a>
-            </Button>
-          </div>
-
-          <ul
-            className="reveal mt-10 flex flex-wrap gap-x-6 gap-y-3"
-            style={{ "--reveal-delay": "320ms" } as React.CSSProperties}
-          >
-            {TRUST_POINTS.map((point) => (
-              <li
-                key={point}
-                className="flex items-center gap-2 text-sm font-medium text-primary-foreground/90"
-              >
-                <span className="flex size-5 items-center justify-center rounded-full bg-brand/90 text-[11px] font-bold text-brand-foreground">
-                  ✓
-                </span>
-                {point}
-              </li>
-            ))}
-          </ul>
+            <a href={SITE.telHref}>
+              <Phone className="size-4" /> Call Now
+            </a>
+          </Button>
         </div>
+        <p
+          className="hero-fade mt-8 text-[11px] tracking-[0.2em] text-muted-foreground uppercase"
+          style={{ animationDelay: "720ms" }}
+        >
+          Multi-Brand · Transparent Service · Complete Car Care
+        </p>
+      </div>
+
+      <div className="animate-pulse-line absolute inset-x-0 bottom-0 h-px bg-brand" />
+      <div className="animate-scroll-pulse absolute bottom-8 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 md:flex">
+        <span className="h-8 w-px bg-white/40" />
+        <span className="text-[9px] tracking-[0.28em] text-white/50 uppercase">Scroll</span>
       </div>
     </section>
   );

@@ -1,25 +1,14 @@
-import { useEffect, useState } from "react";
+"use client";
+
+import { useState } from "react";
 import { MessageCircle, Phone } from "lucide-react";
-import { SITE, whatsappLink } from "@/lib/site";
+
+import { BOOKING_MESSAGE, SITE, whatsappLink } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
-const DEFAULT_MSG = `Hello ${SITE.name}, I would like to book a car service.`;
-
 export function FloatingCtas() {
-  const [hideForForm, setHideForForm] = useState(false);
-
-  useEffect(() => {
-    const booking = document.getElementById("booking");
-    if (!booking) return;
-    const observer = new IntersectionObserver(
-      (entries) => setHideForForm(Boolean(entries[0]?.isIntersecting)),
-      { threshold: 0.2 },
-    );
-    observer.observe(booking);
-    return () => observer.disconnect();
-  }, []);
-
-  const href = whatsappLink(DEFAULT_MSG);
+  const [hover, setHover] = useState(false);
+  const href = whatsappLink(BOOKING_MESSAGE);
 
   return (
     <>
@@ -27,36 +16,35 @@ export function FloatingCtas() {
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="Book on WhatsApp"
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
+        aria-label="Book Your Service on WhatsApp"
         className={cn(
-          "animate-float-pulse animate-ring-pulse fixed right-5 bottom-6 z-40 hidden items-center gap-2 rounded-full bg-[#25D366] px-5 py-3.5 text-sm font-semibold text-white shadow-lift md:inline-flex",
-          hideForForm && "md:hidden",
+          "animate-wa fixed right-5 z-40 hidden items-center gap-2 overflow-hidden rounded-full bg-[#25D366] text-sm font-semibold text-white md:inline-flex",
+          "bottom-6 h-14 px-4 transition-[width,padding] duration-300",
         )}
       >
-        <MessageCircle className="size-5" />
-        Book on WhatsApp
+        <MessageCircle className="size-5 shrink-0" />
+        <span className={cn("whitespace-nowrap", hover ? "max-w-xs" : "max-w-24")}>
+          {hover ? "Book Your Service on WhatsApp" : "Book Service"}
+        </span>
       </a>
 
-      <div
-        className={cn(
-          "fixed inset-x-0 bottom-0 z-40 border-t border-border bg-background/95 p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur md:hidden",
-          hideForForm && "hidden",
-        )}
-      >
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-background/95 p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur md:hidden">
         <div className="grid grid-cols-2 gap-2">
-          <a
-            href={SITE.telHref}
-            className="inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-primary text-sm font-semibold text-primary-foreground"
-          >
-            <Phone className="size-4" /> Call
-          </a>
           <a
             href={href}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-[#25D366] text-sm font-semibold text-white"
+            className="inline-flex h-12 items-center justify-center gap-2 bg-[#25D366] text-sm font-semibold text-white"
           >
-            <MessageCircle className="size-4" /> Book Service
+            <MessageCircle className="size-4" /> WhatsApp
+          </a>
+          <a
+            href={SITE.telHref}
+            className="inline-flex h-12 items-center justify-center gap-2 bg-brand text-sm font-semibold text-brand-foreground"
+          >
+            <Phone className="size-4" /> Call Now
           </a>
         </div>
       </div>

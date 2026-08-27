@@ -1,61 +1,55 @@
-import { Clock, MapPin, Phone } from "lucide-react";
-import { Section, SectionHeading } from "./Section";
+import { MessageCircle, Navigation, Phone } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
-import { SITE, mapsDirections, mapsEmbed, whatsappLink } from "@/lib/site";
+import { BOOKING_MESSAGE, mapsDirections, mapsEmbed, SITE, whatsappLink } from "@/lib/site";
 
 export function Contact() {
   return (
-    <Section id="contact">
-      <SectionHeading
-        eyebrow="Visit Us"
-        title="Car Service in Jagatpura, Jaipur"
-        description="Easy to reach from Kendriya Vihar Road. Open daily for walk-ins and WhatsApp bookings."
-      />
-
-      <div className="mt-14 grid gap-8 lg:grid-cols-2">
-        <div className="reveal space-y-6">
-          <h3 className="font-display text-2xl font-bold text-foreground">{SITE.name}</h3>
-          <p className="flex gap-3 text-sm text-muted-foreground">
-            <MapPin className="mt-0.5 size-5 shrink-0 text-accent" />
-            {SITE.address}
-          </p>
-          <p className="flex gap-3 text-sm text-muted-foreground">
-            <Phone className="mt-0.5 size-5 shrink-0 text-accent" />
-            <a href={SITE.telHref} className="hover:text-foreground">
-              {SITE.phone}
-            </a>
-          </p>
-          <p className="flex gap-3 text-sm text-muted-foreground">
-            <Clock className="mt-0.5 size-5 shrink-0 text-accent" />
-            {SITE.hours}
-          </p>
-          <div className="flex flex-wrap gap-3 pt-2">
-            <Button asChild variant="brand" size="lg">
-              <a href={whatsappLink(`Hello ${SITE.name}, I would like to book a service.`)}>
-                Book on WhatsApp
-              </a>
-            </Button>
-            <Button asChild variant="electric" size="lg">
-              <a href={SITE.telHref}>Call Now</a>
-            </Button>
-            <Button asChild variant="outline" size="lg">
-              <a href={mapsDirections} target="_blank" rel="noreferrer">
-                Get Directions
-              </a>
-            </Button>
+    <section id="contact" className="bg-background">
+      <div className="grid lg:grid-cols-2">
+        <div className="relative min-h-[420px] grayscale contrast-125">
+          <iframe
+            title="Auto Point on Google Maps"
+            src={mapsEmbed}
+            className="absolute inset-0 h-full w-full border-0"
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          />
+          <div className="pointer-events-none absolute inset-0 bg-brand/10 mix-blend-multiply" />
+        </div>
+        <div className="flex flex-col justify-center px-4 py-16 sm:px-10">
+          <div className="reveal">
+            <p className="text-[11px] tracking-[0.28em] text-brand uppercase">Location</p>
+            <h2 className="mt-3 font-display text-4xl sm:text-6xl">Find Auto Point.</h2>
+            <p className="mt-5 max-w-md text-muted-foreground">{SITE.address}</p>
+            <p className="mt-2 text-sm text-brand">{SITE.hours}</p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Button
+                asChild
+                className="rounded-none bg-brand text-brand-foreground hover:bg-brand/90"
+              >
+                <a href={mapsDirections} target="_blank" rel="noopener noreferrer">
+                  <Navigation className="size-4" /> Get Directions
+                </a>
+              </Button>
+              <Button
+                asChild
+                variant="outline"
+                className="rounded-none border-white/20 bg-transparent"
+              >
+                <a href={SITE.telHref}>
+                  <Phone className="size-4" /> Call
+                </a>
+              </Button>
+              <Button asChild className="rounded-none bg-[#25D366] text-white hover:bg-[#1fb85a]">
+                <a href={whatsappLink(BOOKING_MESSAGE)} target="_blank" rel="noopener noreferrer">
+                  <MessageCircle className="size-4" /> WhatsApp
+                </a>
+              </Button>
+            </div>
           </div>
         </div>
-
-        <div className="reveal overflow-hidden rounded-3xl border border-border shadow-soft">
-          <iframe
-            title={`${SITE.name} location map in Jagatpura, Jaipur`}
-            src={mapsEmbed}
-            loading="lazy"
-            referrerPolicy="strict-origin-when-cross-origin"
-            className="h-[320px] w-full border-0 sm:h-[420px]"
-          />
-        </div>
       </div>
-    </Section>
+    </section>
   );
 }

@@ -17,13 +17,13 @@ const buttonVariants = cva(
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
         brand:
-          "bg-gradient-brand text-brand-foreground shadow-glow hover:-translate-y-0.5 hover:brightness-105 transition-smooth font-semibold",
+          "bg-brand text-brand-foreground hover:bg-brand/90 transition-smooth font-semibold tracking-wide uppercase",
         electric:
-          "bg-accent text-accent-foreground shadow-soft hover:-translate-y-0.5 hover:bg-accent/90 transition-smooth font-semibold",
+          "bg-primary text-primary-foreground hover:bg-primary/90 transition-smooth font-semibold tracking-wide uppercase",
         heroGhost:
-          "glass-panel text-primary-foreground hover:-translate-y-0.5 hover:bg-background/20 transition-smooth font-semibold",
+          "border border-primary-foreground/30 bg-primary-foreground/5 text-primary-foreground hover:bg-primary-foreground/10 transition-smooth font-semibold tracking-wide uppercase",
         outlineBrand:
-          "border-2 border-brand text-brand bg-transparent hover:bg-brand hover:text-brand-foreground transition-smooth font-semibold",
+          "border border-brand text-brand bg-transparent hover:bg-brand hover:text-brand-foreground transition-smooth font-semibold tracking-wide uppercase",
       },
       size: {
         default: "h-9 px-4 py-2",
