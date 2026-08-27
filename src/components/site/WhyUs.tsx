@@ -1,77 +1,41 @@
-import { Check, X } from "lucide-react";
-import { Section, SectionHeading } from "./Section";
-
-const OURS = [
-  "Skilled Technicians",
-  "Multi-Brand Expertise",
-  "Pickup & Drop Facility",
-  "Transparent Pricing",
-  "Timely Delivery",
-  "Genuine Parts Support",
-  "Digital Service Updates",
-  "Customer First Approach",
-];
-
-const OTHERS = [
-  "Delayed Delivery",
-  "Hidden Charges",
-  "No Service Tracking",
-  "Inconsistent Quality",
-];
+import { IMG, WHY } from "@/lib/site";
 
 export function WhyUs() {
   return (
-    <Section id="why-us" className="bg-primary">
-      <SectionHeading
-        eyebrow="Why Choose Us"
-        tone="dark"
-        title="Why Owners Across Jaipur Choose Mehta Automobile"
-        description="A workshop experience built on honesty, skill and communication, not surprises on the final bill."
-      />
-
-      <div className="mt-14 grid gap-6 lg:grid-cols-2">
-        <div className="reveal glass-card rounded-3xl border-brand/30 p-8">
-          <h3 className="font-display text-xl font-bold text-foreground">Mehta Automobile</h3>
-          <p className="mt-1 text-sm text-muted-foreground">
-            What every customer gets, every time.
-          </p>
-          <ul className="mt-6 space-y-3">
-            {OURS.map((item) => (
-              <li key={item} className="flex items-center gap-3 rounded-xl bg-surface p-3">
-                <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-success/15 text-success">
-                  <Check className="size-3.5" />
-                </span>
-                <span className="text-sm font-medium text-foreground">{item}</span>
-              </li>
-            ))}
-          </ul>
+    <section id="why" className="bg-background py-20 sm:py-24">
+      <div className="mx-auto grid max-w-7xl items-stretch gap-10 px-4 sm:px-6 lg:grid-cols-12">
+        <div className="reveal lg:col-span-6">
+          <div className="overflow-hidden rounded-3xl shadow-[0_24px_80px_-28px_rgb(15_23_42/0.2)]">
+            <img
+              src={IMG.mechanic}
+              alt="Technician working in the engine bay"
+              loading="lazy"
+              className="aspect-[4/5] w-full object-cover lg:aspect-auto lg:h-full lg:min-h-[640px]"
+            />
+          </div>
         </div>
-
-        <div
-          className="reveal rounded-3xl border border-primary-foreground/15 bg-primary-foreground/5 p-8"
-          style={{ "--reveal-delay": "120ms" } as React.CSSProperties}
-        >
-          <h3 className="font-display text-xl font-bold text-primary-foreground">
-            Ordinary Garages
-          </h3>
-          <p className="mt-1 text-sm text-primary-foreground/60">
-            The frustrations we designed our process to remove.
-          </p>
-          <ul className="mt-6 space-y-3">
-            {OTHERS.map((item) => (
+        <div className="flex flex-col justify-center lg:col-span-6 lg:pl-8">
+          <h2 className="reveal font-display text-4xl font-semibold tracking-tight text-navy sm:text-5xl">
+            More Than Just a Workshop.
+          </h2>
+          <ul className="mt-10">
+            {WHY.map((item, i) => (
               <li
-                key={item}
-                className="flex items-center gap-3 rounded-xl border border-primary-foreground/10 p-3"
+                key={item.n}
+                className="reveal border-t border-border py-6 last:border-b"
+                style={{ "--reveal-delay": `${i * 80}ms` } as React.CSSProperties}
               >
-                <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-destructive/20 text-destructive-foreground">
-                  <X className="size-3.5" />
-                </span>
-                <span className="text-sm font-medium text-primary-foreground/80">{item}</span>
+                <p className="text-sm font-semibold tracking-[0.12em] text-navy">
+                  <span className="text-brand">{item.n}</span>
+                  <span className="mx-2 text-navy/30">—</span>
+                  {item.title}
+                </p>
+                <p className="mt-2 text-sm text-muted-foreground">{item.text}</p>
               </li>
             ))}
           </ul>
         </div>
       </div>
-    </Section>
+    </section>
   );
 }

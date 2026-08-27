@@ -1,21 +1,27 @@
 export const SITE = {
-  name: "Mehta Automobile",
-  tagline: "Premium Multi-Brand Car Care & Repair Workshop",
-  phone: "+91 7030067700",
-  phoneRaw: "917030067700",
-  telHref: "tel:+917030067700",
-  hours: "Daily, 9:30 AM – 6:30 PM",
-  hoursShort: "9:30 AM – 6:30 PM",
-  address: "Near Kendriya Vihar Road, Jagatpura, Jaipur, Rajasthan 302017",
-  mapsQuery: "Mehta Automobile, Kendriya Vihar Road, Jagatpura, Jaipur, Rajasthan 302017",
-  rating: "4.3",
+  name: "Auto Point",
+  legalName: "Auto Point Multi Brand Car Service Center",
+  tagline: "Multi-Brand Automotive Care",
+  phone: "09352865989",
+  phonePretty: "09352865989",
+  phoneRaw: "919352865989",
+  telHref: "tel:+919352865989",
+  hours: "Open 24 Hours",
+  hoursNote:
+    "The business listing currently shows 24-hour availability. Contact the workshop to confirm the service you need.",
+  address: "Plot No. 9, Shyam Nagar, Opp. Laal Bagh, Beelwa, Tonk Road, Jaipur, Rajasthan 302018",
+  addressShort: "Shyam Nagar, Tonk Road, Jaipur",
+  mapsQuery:
+    "Auto Point Multi Brand Car Service Center, Shyam Nagar, Beelwa, Tonk Road, Jaipur 302018",
   city: "Jaipur",
+  rating: "4.4",
+  reviewCount: "15",
 } as const;
 
 export const SEO = {
-  title: "Mehta Automobile | Premium Multi-Brand Car Service & Repair in Jaipur",
+  title: "Auto Point | Multi Brand Car Service Center in Jaipur",
   description:
-    "Professional multi-brand car service, repair, detailing, pickup & drop, and maintenance in Jagatpura Jaipur. Book instantly on WhatsApp.",
+    "Premium multi-brand car service, electrical repair, denting, painting, washing and complete car care in Beelwa, Tonk Road, Jaipur. Book on WhatsApp.",
   ogImage: "/og-workshop.jpg",
 } as const;
 
@@ -23,6 +29,9 @@ export function whatsappLink(message?: string) {
   const base = `https://wa.me/${SITE.phoneRaw}`;
   return message ? `${base}?text=${encodeURIComponent(message)}` : base;
 }
+
+export const BOOKING_MESSAGE =
+  "Hello Auto Point, I would like to book a car service. Please share the available time and details.";
 
 export const mapsDirections = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
   SITE.mapsQuery,
@@ -32,143 +41,181 @@ export const mapsEmbed = `https://www.google.com/maps?q=${encodeURIComponent(
   SITE.mapsQuery,
 )}&output=embed`;
 
+const u = (id: string, w = 1600) =>
+  `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&q=80&w=${w}`;
+
+const p = (id: string, w = 1400) =>
+  `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&w=${w}`;
+
+/** Bright, premium automotive photography for the light showroom look. */
+export const IMG = {
+  hero: p("116675", 2000),
+  studio: p("3802510", 1600),
+  mercedes: p("112460", 1800),
+  bmw: p("170811", 1600),
+  mustang: u("1494976388531-d1058494cdd8", 1800),
+  mechanic: p("3807329", 1600),
+  bay: p("3807517", 1600),
+  inspection: p("3807277", 1600),
+  underCar: u("1486262715619-67b85e0b08d3", 1600),
+  service: u("1619642751034-765dfdf7c58e", 1400),
+  wash: u("1607860108855-64acf2078ed9", 1400),
+  engineHands: u("1770656505709-fd97236989b9", 1400),
+  detailing: p("6873088", 1400),
+  painting: p("14615263", 1400),
+  bayWork: p("8478254", 1400),
+  undercarriage: p("2244746", 1400),
+};
+
+export const SERVICES = [
+  {
+    n: "01",
+    title: "Car Service",
+    text: "Routine maintenance designed to keep your vehicle running smoothly.",
+    image: IMG.bay,
+  },
+  {
+    n: "02",
+    title: "Denting & Painting",
+    text: "Professional body restoration and exterior finishing.",
+    image: IMG.painting,
+  },
+  {
+    n: "03",
+    title: "Electrical Repair",
+    text: "Diagnosis and repair for vehicle electrical systems.",
+    image: IMG.engineHands,
+  },
+  {
+    n: "04",
+    title: "Car Wash & Dry Cleaning",
+    text: "Give your vehicle a clean, refreshed finish inside and out.",
+    image: IMG.wash,
+  },
+  {
+    n: "05",
+    title: "Car Accessories",
+    text: "Practical and stylish upgrades for your vehicle.",
+    image: IMG.studio,
+  },
+] as const;
+
+export const BRANDS = [
+  "Mahindra",
+  "Jaguar",
+  "Hyundai",
+  "Honda",
+  "Volkswagen",
+  "Suzuki",
+  "Audi",
+  "Nissan",
+  "Skoda",
+  "Toyota",
+  "BMW",
+] as const;
+
+export const PICKUP_STEPS = [
+  { n: "01", title: "Book" },
+  { n: "02", title: "Pickup" },
+  { n: "03", title: "Service" },
+  { n: "04", title: "Drop" },
+] as const;
+
+export const WHY = [
+  {
+    n: "01",
+    title: "Professional Workmanship",
+    text: "Careful inspection and service.",
+  },
+  {
+    n: "02",
+    title: "Multi-Brand Knowledge",
+    text: "Support for a wide range of vehicles.",
+  },
+  {
+    n: "03",
+    title: "Transparent Communication",
+    text: "Keep customers informed about the work.",
+  },
+  {
+    n: "04",
+    title: "Convenient Booking",
+    text: "Book directly through WhatsApp.",
+  },
+] as const;
+
 export const SERVICE_OPTIONS = [
-  "Car Washing",
-  "Periodic Maintenance",
-  "Engine Diagnostics",
-  "Brake Repair",
-  "Suspension Repair",
-  "AC Service",
+  "Car Service",
+  "Electrical Repair",
   "Denting & Painting",
-  "Insurance Claim Assistance",
-  "Car Detailing",
-  "Wheel Alignment",
-  "Battery Replacement",
-  "Pickup & Drop Service",
-  "Other / Inspection",
+  "Car Wash & Dry Cleaning",
+  "Car Accessories",
+  "General Repairs",
+  "Pickup Request",
 ] as const;
 
 export const FAQS = [
   {
-    q: "Do you provide pickup & drop?",
-    a: "Yes. We collect your car from home or office across Jagatpura and nearby Jaipur, service it at the workshop, and deliver it back.",
+    q: "What car brands do you service?",
+    a: "We provide multi-brand automotive service and repair. Auto Point is not presented as an authorised dealer or official brand service centre.",
   },
   {
-    q: "Which brands do you service?",
-    a: "Mehta Automobile is a multi-brand workshop. We service hatchbacks, sedans and SUVs from popular Indian and international brands.",
+    q: "What services do you provide?",
+    a: "Car servicing, electrical repair, denting, painting, washing, dry cleaning, accessories and general repairs.",
   },
   {
-    q: "How long does servicing take?",
-    a: "A standard periodic service is typically completed the same day. Larger repairs depend on parts and inspection. We share a time estimate before work begins.",
+    q: "Can I book through WhatsApp?",
+    a: "Yes. Customers can contact Auto Point directly through WhatsApp.",
   },
   {
-    q: "Do you provide genuine parts?",
-    a: "Yes. We support genuine and OEM-grade parts and discuss options with you before fitment.",
+    q: "Do you provide pickup and drop?",
+    a: "You can request pickup and drop through WhatsApp. The workshop will confirm availability for your location and time.",
   },
   {
-    q: "Can I get an estimate before repair?",
-    a: "Always. After inspection we share a clear estimate on WhatsApp. Work starts only after you approve it.",
+    q: "Is Auto Point open 24 hours?",
+    a: SITE.hoursNote,
   },
 ] as const;
 
-export const REVIEWS = [
-  {
-    name: "Rahul S.",
-    place: "Jagatpura, Jaipur",
-    rating: 5,
-    text: "Transparent pricing and they explained every item on the job card. Pickup was on time and the car came back washed.",
-    service: "Periodic Maintenance",
-  },
-  {
-    name: "Neha K.",
-    place: "Mansarovar, Jaipur",
-    rating: 5,
-    text: "Got my AC serviced before summer. Cooling is back and they showed me the before/after on the gauges. Recommended.",
-    service: "AC Service",
-  },
-  {
-    name: "Amit P.",
-    place: "Malviya Nagar, Jaipur",
-    rating: 4,
-    text: "Denting and paint on the rear door matched well. Took a day extra for the part, but they kept me updated on WhatsApp.",
-    service: "Denting & Painting",
-  },
-  {
-    name: "Sanjay M.",
-    place: "Jagatpura, Jaipur",
-    rating: 5,
-    text: "Wheel alignment and brake work done properly. No upselling, just what the car needed. Will come back.",
-    service: "Brake Repair",
-  },
-  {
-    name: "Priya T.",
-    place: "Jaipur",
-    rating: 4,
-    text: "Detailing made the interiors feel new. Staff was polite and the workshop is easy to reach from Kendriya Vihar Road.",
-    service: "Car Detailing",
-  },
-] as const;
-
-export const ESTIMATE_ITEMS = [
-  { name: "Car Washing", base: 499 },
-  { name: "Periodic Maintenance", base: 3499 },
-  { name: "Engine Diagnostics", base: 999 },
-  { name: "Brake Repair", base: 2499 },
-  { name: "Suspension Repair", base: 3999 },
-  { name: "AC Service", base: 1999 },
-  { name: "Denting & Painting", base: 4999 },
-  { name: "Car Detailing", base: 2999 },
-  { name: "Wheel Alignment", base: 799 },
-  { name: "Battery Replacement", base: 4499 },
-  { name: "Pickup & Drop Service", base: 299 },
-] as const;
-
-export const VEHICLE_TYPES = [
-  { id: "hatchback", label: "Hatchback", multiplier: 1 },
-  { id: "sedan", label: "Sedan", multiplier: 1.15 },
-  { id: "suv", label: "SUV / MUV", multiplier: 1.35 },
-] as const;
-
-export const CHECKLIST_ITEMS = [
-  "Engine oil level and condition",
-  "Coolant level and leaks",
-  "Brake pads, discs and fluid",
-  "Tyre pressure, tread and spare",
-  "Battery terminals and cranking",
-  "AC cooling and cabin filter",
-  "Lights, indicators and horn",
-  "Wiper blades and washer spray",
-  "Suspension knocks or uneven ride",
-  "Unusual engine sound or warning lights",
+export const NAV = [
+  { label: "Home", href: "#home" },
+  { label: "Services", href: "#services" },
+  { label: "About", href: "#about" },
+  { label: "Why Us", href: "#why" },
+  { label: "Gallery", href: "#workshop" },
+  { label: "Reviews", href: "#reviews" },
+  { label: "Contact", href: "#contact" },
 ] as const;
 
 export function localBusinessJsonLd() {
   return {
     "@context": "https://schema.org",
     "@type": ["AutoRepair", "LocalBusiness", "AutomotiveBusiness"],
-    name: SITE.name,
+    name: SITE.legalName,
     description: SEO.description,
-    telephone: SITE.telHref.replace("tel:", ""),
-    image: SEO.ogImage,
+    telephone: "+91 93528 65989",
+    image: "/og-workshop.jpg",
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: SITE.rating,
+      reviewCount: SITE.reviewCount,
+      bestRating: "5",
+    },
     address: {
       "@type": "PostalAddress",
-      streetAddress: "Near Kendriya Vihar Road, Jagatpura",
+      streetAddress: "Plot No. 9, Shyam Nagar, Opp. Laal Bagh, Beelwa, Tonk Road",
       addressLocality: "Jaipur",
       addressRegion: "Rajasthan",
-      postalCode: "302017",
+      postalCode: "302018",
       addressCountry: "IN",
-    },
-    geo: {
-      "@type": "GeoCoordinates",
-      latitude: 26.8006,
-      longitude: 75.8636,
     },
     openingHoursSpecification: {
       "@type": "OpeningHoursSpecification",
       dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-      opens: "09:30",
-      closes: "18:30",
+      opens: "00:00",
+      closes: "23:59",
     },
+    hasMap: mapsDirections,
     areaServed: {
       "@type": "City",
       name: "Jaipur",

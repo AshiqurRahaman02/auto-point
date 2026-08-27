@@ -1,85 +1,78 @@
-import { CalendarCheck, CheckCircle2, ClipboardList, Car, Wrench, Truck } from "lucide-react";
-import { Section, SectionHeading } from "./Section";
-import { Button } from "@/components/ui/button";
-import { SITE, whatsappLink } from "@/lib/site";
+"use client";
 
-const STEPS = [
-  {
-    icon: CalendarCheck,
-    title: "Schedule on WhatsApp",
-    desc: "Share your car and preferred time slot.",
-  },
-  { icon: Truck, title: "Vehicle Pickup", desc: "Our driver collects the car from your doorstep." },
-  {
-    icon: ClipboardList,
-    title: "Expert Inspection",
-    desc: "Multi-point check and a clear estimate before work starts.",
-  },
-  {
-    icon: Wrench,
-    title: "Service & Repair",
-    desc: "Trained technicians with genuine parts support.",
-  },
-  {
-    icon: CheckCircle2,
-    title: "Quality Check",
-    desc: "Road test and final inspection by the supervisor.",
-  },
-  { icon: Car, title: "Vehicle Delivered", desc: "Washed, sanitised and delivered back on time." },
-];
+import { useEffect, useRef, useState } from "react";
+import { ArrowUpRight } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
+import { PICKUP_STEPS, whatsappLink } from "@/lib/site";
 
 export function Pickup() {
+  const ref = useRef<HTMLOListElement>(null);
+  const [fill, setFill] = useState(0);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const onScroll = () => {
+      const rect = el.getBoundingClientRect();
+      const start = window.innerHeight * 0.7;
+      const progress = (start - rect.top) / (rect.height * 0.9);
+      setFill(Math.min(100, Math.max(0, progress * 100)));
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
-    <Section id="pickup">
-      <SectionHeading
-        eyebrow="Pickup & Drop"
-        title="We Pick Up, Service, and Deliver Back"
-        description="Zero-hassle servicing across Jagatpura and nearby Jaipur, without you leaving home or office."
-      />
+    <section className="bg-background py-20 sm:py-24">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6">
+        <h2 className="reveal font-display max-w-xl text-4xl font-semibold tracking-tight text-navy sm:text-5xl">
+          We Make Car Service Easier.
+        </h2>
 
-      <ol className="relative mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        <span className="pointer-events-none absolute inset-x-0 top-14 hidden h-px bg-gradient-to-r from-transparent via-accent/40 to-transparent lg:block" />
-        {STEPS.map((step, i) => (
-          <li
-            key={step.title}
-            className="reveal group relative rounded-2xl border border-border bg-card p-6 shadow-soft transition-smooth hover:-translate-y-1.5 hover:shadow-lift"
-            style={{ "--reveal-delay": `${i * 80}ms` } as React.CSSProperties}
-          >
-            <div className="flex items-center justify-between">
-              <span className="bg-gradient-blue flex size-12 items-center justify-center rounded-xl text-accent-foreground shadow-soft transition-smooth group-hover:rotate-6">
-                <step.icon className="size-5" />
-              </span>
-              <span className="font-display text-4xl font-extrabold text-muted/80">
-                {String(i + 1).padStart(2, "0")}
-              </span>
-            </div>
-            <h3 className="mt-5 font-display text-lg font-semibold text-foreground">
-              {step.title}
-            </h3>
-            <p className="mt-2 text-sm text-muted-foreground">{step.desc}</p>
-          </li>
-        ))}
-      </ol>
+        <ol ref={ref} className="relative mt-16 grid gap-10 md:grid-cols-4">
+          <span className="pointer-events-none absolute top-5 left-5 h-[calc(100%-2.5rem)] w-px bg-border md:top-5 md:right-8 md:left-8 md:h-px md:w-auto" />
+          <span
+            className="pointer-events-none absolute top-5 left-5 w-px bg-brand md:hidden"
+            style={{ height: `${fill}%` }}
+          />
+          <span
+            className="pointer-events-none absolute top-5 right-8 left-8 hidden h-px bg-brand md:block"
+            style={{ width: `calc(${fill}% - 0px)`, maxWidth: "100%" }}
+          />
+          {PICKUP_STEPS.map((step, i) => (
+            <li
+              key={step.n}
+              className="reveal relative pl-10 md:pl-0"
+              style={{ "--reveal-delay": `${i * 90}ms` } as React.CSSProperties}
+            >
+              <span className="absolute top-3 left-3 size-4 rounded-full border-2 border-brand bg-background md:relative md:top-0 md:left-0 md:mb-6 md:block" />
+              <p className="font-display text-4xl text-navy/20">{step.n}</p>
+              <h3 className="mt-2 text-xl font-semibold text-navy">{step.title}</h3>
+            </li>
+          ))}
+        </ol>
 
-      <div className="reveal mt-12 flex flex-col items-center gap-4 rounded-3xl bg-primary p-8 text-center sm:flex-row sm:justify-between sm:text-left">
-        <div>
-          <h3 className="font-display text-xl font-bold text-primary-foreground">
-            Need a pickup today?
-          </h3>
-          <p className="mt-1 text-sm text-primary-foreground/70">
-            Slots available daily, {SITE.hours.replace("Daily, ", "")}.
-          </p>
-        </div>
-        <Button asChild variant="brand" size="xl">
+        <p className="reveal mt-10 max-w-xl text-muted-foreground">
+          Book your service through WhatsApp and coordinate vehicle pickup and delivery directly
+          with the workshop.
+        </p>
+        <Button
+          asChild
+          className="reveal mt-8 h-12 rounded-full bg-brand px-7 text-brand-foreground hover:-translate-y-0.5 hover:bg-brand/90"
+        >
           <a
             href={whatsappLink(
-              `Hello ${SITE.name}, I would like to request Pickup & Drop for my car.`,
+              "Hello Auto Point, I would like to request vehicle pickup for a service. Please share availability.",
             )}
+            target="_blank"
+            rel="noopener noreferrer"
           >
-            Request Pickup & Drop
+            Request Pickup <ArrowUpRight className="size-4" />
           </a>
         </Button>
       </div>
-    </Section>
+    </section>
   );
 }

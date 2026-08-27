@@ -1,98 +1,117 @@
-import { useCallback, useRef, useState } from "react";
-import { MoveHorizontal } from "lucide-react";
-import { Section, SectionHeading } from "./Section";
-import beforeWash from "@/assets/before-wash.jpg";
+"use client";
+
+import { useRef, useState } from "react";
+
+import afterDent from "@/assets/after-dent.jpg";
 import afterWash from "@/assets/after-wash.jpg";
 import beforeDent from "@/assets/before-dent.jpg";
-import afterDent from "@/assets/after-dent.jpg";
-import galleryDetailing from "@/assets/gallery-detailing.jpg";
+import beforeWash from "@/assets/before-wash.jpg";
 
-const ITEMS = [
-  { label: "Car Wash", before: beforeWash, after: afterWash },
-  { label: "Dent Repair & Paint Restoration", before: beforeDent, after: afterDent },
-  { label: "Detailing", before: beforeWash, after: galleryDetailing },
-];
+const PAIRS = [
+  {
+    label: "Paint restoration",
+    before: beforeDent,
+    after: afterDent,
+    beforeAlt: "Damaged paint and surface chip before restoration",
+    afterAlt: "Restored metallic panel after paint work",
+  },
+  {
+    label: "Cleaning",
+    before: beforeWash,
+    after: afterWash,
+    beforeAlt: "Muddy vehicle before wash",
+    afterAlt: "Clean finished vehicle after wash and detailing",
+  },
+] as const;
 
-function Compare({ before, after, label }: { before: string; after: string; label: string }) {
-  const [pos, setPos] = useState(50);
-  const frameRef = useRef<HTMLDivElement | null>(null);
-  const dragging = useRef(false);
-
-  const move = useCallback((clientX: number) => {
-    const rect = frameRef.current?.getBoundingClientRect();
-    if (!rect) return;
-    setPos(Math.min(100, Math.max(0, ((clientX - rect.left) / rect.width) * 100)));
-  }, []);
+export function BeforeAfter() {
+  const [pair, setPair] = useState(0);
+  const active = PAIRS[pair] ?? PAIRS[0];
 
   return (
-    <figure className="reveal overflow-hidden rounded-2xl border border-border bg-card shadow-soft">
-      <div
-        ref={frameRef}
-        className="relative aspect-4/3 cursor-ew-resize touch-none select-none"
-        onPointerDown={(e) => {
-          dragging.current = true;
-          e.currentTarget.setPointerCapture(e.pointerId);
-          move(e.clientX);
-        }}
-        onPointerMove={(e) => dragging.current && move(e.clientX)}
-        onPointerUp={() => (dragging.current = false)}
-        onPointerCancel={() => (dragging.current = false)}
-      >
-        <img
-          src={after}
-          alt={`${label} after service at Mehta Automobile`}
-          loading="lazy"
-          width={1024}
-          height={768}
-          className="absolute inset-0 h-full w-full object-cover"
-        />
-        <div className="absolute inset-0 overflow-hidden" style={{ width: `${pos}%` }}>
-          <img
-            src={before}
-            alt={`${label} before service at Mehta Automobile`}
-            loading="lazy"
-            width={1024}
-            height={768}
-            className="h-full w-full object-cover"
-            style={{ width: frameRef.current?.clientWidth ?? "100%", maxWidth: "none" }}
-          />
+    <section className="bg-white py-20 sm:py-24">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6">
+        <div className="reveal flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+          <h2 className="font-display text-4xl font-semibold tracking-tight text-navy sm:text-5xl">
+            See The Difference.
+          </h2>
+          <div className="flex gap-2">
+            {PAIRS.map((item, i) => (
+              <button
+                key={item.label}
+                type="button"
+                onClick={() => setPair(i)}
+                className={`rounded-full border px-4 py-2 text-xs tracking-[0.14em] uppercase transition-colors ${
+                  pair === i
+                    ? "border-brand bg-brand text-brand-foreground"
+                    : "border-border text-muted-foreground hover:border-navy/30"
+                }`}
+              >
+                {item.label}
+              </button>
+            ))}
+          </div>
         </div>
-        <span className="absolute top-3 left-3 rounded-full bg-primary/80 px-3 py-1 text-[11px] font-bold tracking-wide text-primary-foreground uppercase backdrop-blur">
-          Before
-        </span>
-        <span className="absolute top-3 right-3 rounded-full bg-brand px-3 py-1 text-[11px] font-bold tracking-wide text-brand-foreground uppercase">
-          After
-        </span>
-        <div
-          className="pointer-events-none absolute inset-y-0 w-0.5 bg-brand"
-          style={{ left: `${pos}%` }}
-        >
-          <span className="absolute top-1/2 left-1/2 flex size-10 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-brand text-brand-foreground shadow-glow">
-            <MoveHorizontal className="size-4" />
-          </span>
-        </div>
+
+        {active ? <Compare key={active.label} pair={active} /> : null}
+        <p className="mt-4 text-xs text-muted-foreground">
+          Drag the handle to compare. Images illustrate typical workshop results.
+        </p>
       </div>
-      <figcaption className="flex items-center justify-between px-5 py-4">
-        <span className="font-display text-sm font-semibold text-foreground">{label}</span>
-        <span className="text-xs text-muted-foreground">Drag to compare</span>
-      </figcaption>
-    </figure>
+    </section>
   );
 }
 
-export function BeforeAfter() {
+function Compare({
+  pair,
+}: {
+  pair: {
+    before: string;
+    after: string;
+    beforeAlt: string;
+    afterAlt: string;
+  };
+}) {
+  const [pos, setPos] = useState(52);
+  const ref = useRef<HTMLDivElement>(null);
+
+  function move(clientX: number) {
+    const box = ref.current?.getBoundingClientRect();
+    if (!box) return;
+    const next = ((clientX - box.left) / box.width) * 100;
+    setPos(Math.min(96, Math.max(4, next)));
+  }
+
   return (
-    <Section id="before-after" className="bg-surface">
-      <SectionHeading
-        eyebrow="Before & After"
-        title="Results You Can Actually See"
-        description="Real transformations from our wash, detailing, dent repair and paint restoration bays."
+    <div
+      ref={ref}
+      className="reveal relative mt-10 aspect-[16/9] cursor-ew-resize overflow-hidden rounded-3xl select-none shadow-[0_24px_80px_-28px_rgb(15_23_42/0.2)]"
+      onPointerDown={(e) => {
+        (e.target as HTMLElement).setPointerCapture?.(e.pointerId);
+        move(e.clientX);
+      }}
+      onPointerMove={(e) => {
+        if (e.buttons) move(e.clientX);
+      }}
+    >
+      <img src={pair.after} alt={pair.afterAlt} className="absolute inset-0 h-full w-full object-cover" />
+      <img
+        src={pair.before}
+        alt={pair.beforeAlt}
+        className="absolute inset-0 h-full w-full object-cover"
+        style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }}
       />
-      <div className="mt-14 grid gap-6 lg:grid-cols-3">
-        {ITEMS.map((item) => (
-          <Compare key={item.label} {...item} />
-        ))}
+      <span className="absolute top-4 left-4 rounded-full bg-white/90 px-3 py-1 text-[10px] tracking-[0.18em] text-navy uppercase">
+        Before
+      </span>
+      <span className="absolute top-4 right-4 rounded-full bg-white/90 px-3 py-1 text-[10px] tracking-[0.18em] text-navy uppercase">
+        After
+      </span>
+      <div className="absolute inset-y-0 w-px bg-white" style={{ left: `${pos}%` }}>
+        <span className="absolute top-1/2 left-1/2 grid size-11 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-white text-[10px] tracking-widest text-navy shadow-md">
+          DRAG
+        </span>
       </div>
-    </Section>
+    </div>
   );
 }

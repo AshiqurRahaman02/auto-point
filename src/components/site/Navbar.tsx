@@ -1,27 +1,18 @@
+"use client";
+
 import { useEffect, useState } from "react";
-import { Menu, Phone, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
-import { SITE } from "@/lib/site";
-import { useScrollProgress } from "@/hooks/use-reveal";
+import { NAV } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
-const LINKS = [
-  { label: "Home", href: "#home" },
-  { label: "Services", href: "#services" },
-  { label: "Why Choose Us", href: "#why-us" },
-  { label: "Reviews", href: "#reviews" },
-  { label: "Gallery", href: "#gallery" },
-  { label: "FAQs", href: "#faqs" },
-  { label: "Contact", href: "#contact" },
-];
-
 export function Navbar() {
-  const progress = useScrollProgress();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    const onScroll = () => setScrolled(window.scrollY > 12);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -31,73 +22,43 @@ export function Navbar() {
     <header className="fixed inset-x-0 top-0 z-50">
       <div
         className={cn(
-          "transition-smooth",
-          scrolled
-            ? "bg-background/90 shadow-soft backdrop-blur-xl"
-            : "bg-primary/20 backdrop-blur-md",
+          "border-b bg-white transition-all duration-500",
+          scrolled ? "border-border/80 shadow-[0_8px_30px_-18px_rgb(15_23_42/0.25)] backdrop-blur-xl" : "border-transparent",
         )}
       >
-        <nav className="mx-auto flex h-18 max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
-          <a href="#home" className="group flex items-center gap-3">
-            <span className="bg-gradient-brand flex h-10 w-10 items-center justify-center rounded-xl font-display text-lg font-bold text-brand-foreground shadow-glow">
-              M
-            </span>
-            <span className="leading-tight">
-              <span
-                className={cn(
-                  "block font-display text-base font-bold tracking-tight sm:text-lg",
-                  scrolled ? "text-foreground" : "text-primary-foreground",
-                )}
-              >
-                {SITE.name}
-              </span>
-              <span
-                className={cn(
-                  "hidden text-[11px] font-medium tracking-wide uppercase sm:block",
-                  scrolled ? "text-muted-foreground" : "text-primary-foreground/70",
-                )}
-              >
-                Jagatpura, Jaipur
-              </span>
+        <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6">
+          <a href="#home" className="hero-fade leading-none">
+            <span className="block text-[15px] font-semibold tracking-[0.22em] text-navy">AUTO POINT</span>
+            <span className="mt-1 block text-[9px] tracking-[0.18em] text-muted-foreground">
+              MULTI BRAND CAR SERVICE CENTER
             </span>
           </a>
 
-          <ul className="hidden items-center gap-1 lg:flex">
-            {LINKS.map((l) => (
-              <li key={l.href}>
+          <ul className="hidden items-center gap-6 xl:flex">
+            {NAV.map((item) => (
+              <li key={item.href}>
                 <a
-                  href={l.href}
-                  className={cn(
-                    "relative rounded-lg px-3 py-2 text-sm font-medium transition-smooth after:absolute after:inset-x-3 after:-bottom-0.5 after:h-0.5 after:origin-left after:scale-x-0 after:bg-brand after:transition-transform hover:after:scale-x-100",
-                    scrolled
-                      ? "text-foreground/80 hover:text-foreground"
-                      : "text-primary-foreground/85 hover:text-primary-foreground",
-                  )}
+                  href={item.href}
+                  className="text-[12px] font-medium tracking-[0.08em] text-navy/70 transition-colors hover:text-brand"
                 >
-                  {l.label}
+                  {item.label}
                 </a>
               </li>
             ))}
           </ul>
 
           <div className="flex items-center gap-2">
-            <Button asChild variant="ghost" size="icon" className="hidden sm:inline-flex lg:hidden">
-              <a href={SITE.telHref} aria-label={`Call ${SITE.name}`}>
-                <Phone />
-              </a>
-            </Button>
-            <Button asChild variant="brand" size="lg" className="hidden sm:inline-flex">
-              <a href="#booking">Book Service</a>
+            <Button
+              asChild
+              className="hidden h-10 rounded-full bg-brand px-5 text-xs tracking-[0.12em] text-brand-foreground hover:-translate-y-0.5 hover:bg-brand/90 lg:inline-flex"
+            >
+              <a href="#booking">Book Service →</a>
             </Button>
             <button
               type="button"
+              className="grid size-10 place-items-center text-navy xl:hidden"
+              aria-label="Menu"
               onClick={() => setOpen((v) => !v)}
-              aria-label="Toggle menu"
-              aria-expanded={open}
-              className={cn(
-                "inline-flex h-10 w-10 items-center justify-center rounded-xl border border-border/60 transition-smooth lg:hidden",
-                scrolled ? "text-foreground" : "text-primary-foreground",
-              )}
             >
               {open ? <X className="size-5" /> : <Menu className="size-5" />}
             </button>
@@ -106,37 +67,28 @@ export function Navbar() {
 
         <div
           className={cn(
-            "overflow-hidden bg-background/95 backdrop-blur-xl transition-smooth lg:hidden",
-            open ? "max-h-[32rem] border-t border-border" : "max-h-0",
+            "overflow-hidden bg-white xl:hidden",
+            open ? "max-h-[28rem] border-t border-border" : "max-h-0",
           )}
         >
-          <ul className="mx-auto max-w-7xl px-4 py-3 sm:px-6">
-            {LINKS.map((l) => (
-              <li key={l.href}>
+          <ul className="px-4 py-3">
+            {NAV.map((item) => (
+              <li key={item.href}>
                 <a
-                  href={l.href}
+                  href={item.href}
                   onClick={() => setOpen(false)}
-                  className="block rounded-lg px-3 py-3 text-sm font-medium text-foreground/85 transition-smooth hover:bg-surface hover:text-accent"
+                  className="block py-3 text-sm tracking-[0.08em]"
                 >
-                  {l.label}
+                  {item.label}
                 </a>
               </li>
             ))}
-            <li className="px-3 pt-2 pb-4">
-              <Button asChild variant="brand" size="lg" className="w-full">
-                <a href="#booking" onClick={() => setOpen(false)}>
-                  Book Service
-                </a>
-              </Button>
+            <li className="py-3">
+              <a href="#booking" onClick={() => setOpen(false)} className="text-sm font-medium text-brand">
+                Book Service →
+              </a>
             </li>
           </ul>
-        </div>
-
-        <div className="h-0.5 w-full bg-transparent">
-          <div
-            className="bg-gradient-brand h-full transition-[width] duration-150"
-            style={{ width: `${progress}%` }}
-          />
         </div>
       </div>
     </header>
