@@ -6,6 +6,8 @@ export const SITE = {
   phonePretty: "09352865989",
   phoneRaw: "919352865989",
   telHref: "tel:+919352865989",
+  whatsappPretty: "7030067700",
+  whatsappRaw: "917030067700",
   hours: "Open 24 Hours",
   hoursNote:
     "The business listing currently shows 24-hour availability. Contact the workshop to confirm the service you need.",
@@ -26,7 +28,7 @@ export const SEO = {
 } as const;
 
 export function whatsappLink(message?: string) {
-  const base = `https://wa.me/${SITE.phoneRaw}`;
+  const base = `https://wa.me/${SITE.whatsappRaw}`;
   return message ? `${base}?text=${encodeURIComponent(message)}` : base;
 }
 

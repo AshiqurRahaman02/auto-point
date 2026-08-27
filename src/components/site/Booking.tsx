@@ -56,7 +56,7 @@ export function Booking() {
             Let&apos;s Take Care of Your Car.
           </h2>
           <p className="mt-4 text-muted-foreground">
-            Submit the form and continue on WhatsApp at {SITE.phonePretty}. The workshop confirms
+            Submit the form and continue on WhatsApp at {SITE.whatsappPretty}. The workshop confirms
             the slot after they reply.
           </p>
         </div>

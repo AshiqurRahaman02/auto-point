@@ -1,7 +1,8 @@
 import { ArrowUpRight, Check, Phone } from "lucide-react";
 
+import storefront from "@/assets/auto-point-storefront.png";
 import { Button } from "@/components/ui/button";
-import { BOOKING_MESSAGE, IMG, SITE, whatsappLink } from "@/lib/site";
+import { BOOKING_MESSAGE, SITE, whatsappLink } from "@/lib/site";
 
 export function Hero() {
   return (
@@ -65,13 +66,13 @@ export function Hero() {
             <div className="absolute -left-3 top-10 hidden h-28 w-px bg-brand lg:block" />
             <div className="overflow-hidden rounded-3xl shadow-[0_24px_80px_-28px_rgb(15_23_42/0.22)]">
               <img
-                src={IMG.hero}
-                alt="Professionally cared-for white SUV in bright daylight"
-                width={2000}
-                height={1333}
+                src={storefront}
+                alt="Auto Point Multi Brand Car Service Center storefront on Tonk Road, Jaipur"
+                width={1600}
+                height={900}
                 fetchPriority="high"
                 decoding="async"
-                className="animate-ken aspect-[4/3] w-full object-cover lg:aspect-[5/4]"
+                className="animate-ken aspect-[4/3] w-full object-cover object-[center_35%]"
               />
             </div>
             <div className="animate-float absolute -bottom-4 left-4 rounded-2xl bg-white px-5 py-4 shadow-[0_16px_40px_-20px_rgb(15_23_42/0.28)] sm:left-6">
