@@ -61,7 +61,10 @@ export function Booking() {
           </p>
         </div>
 
-        <form onSubmit={onSubmit} className="reveal grid gap-4 rounded-3xl bg-white p-6 shadow-[0_24px_80px_-28px_rgb(15_23_42/0.12)] sm:p-8">
+        <form
+          onSubmit={onSubmit}
+          className="reveal grid gap-4 rounded-3xl bg-white p-6 shadow-[0_24px_80px_-28px_rgb(15_23_42/0.12)] sm:p-8"
+        >
           <Field label="Name" htmlFor="name">
             <Input id="name" name="name" required className={fieldClass} />
           </Field>
@@ -130,7 +133,12 @@ export function Booking() {
             </div>
           </fieldset>
           <Field label="Message" htmlFor="notes">
-            <Textarea id="notes" name="notes" rows={3} className="rounded-xl border-border bg-white" />
+            <Textarea
+              id="notes"
+              name="notes"
+              rows={3}
+              className="rounded-xl border-border bg-white"
+            />
           </Field>
           <Button
             type="submit"
@@ -139,7 +147,9 @@ export function Booking() {
             Book via WhatsApp <ArrowUpRight className="size-4" />
           </Button>
           {sent ? (
-            <p className="text-xs text-muted-foreground">WhatsApp has opened with your booking details.</p>
+            <p className="text-xs text-muted-foreground">
+              WhatsApp has opened with your booking details.
+            </p>
           ) : null}
         </form>
       </div>

@@ -28,10 +28,10 @@ export function Services() {
                 src={item.image}
                 alt=""
                 loading="lazy"
-                className="pointer-events-none absolute inset-y-0 right-0 h-full w-[42%] object-cover opacity-0 transition-all duration-700 group-hover:opacity-100 max-md:hidden"
+                className="pointer-events-none absolute inset-y-0 right-0 z-10 h-full w-[40%] object-cover opacity-0 transition-all duration-700 group-hover:opacity-100 max-md:hidden"
               />
-              <div className="pointer-events-none absolute inset-0 bg-background opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-              <div className="relative grid w-full items-center gap-4 md:grid-cols-[5rem_1fr_auto] md:gap-8">
+              <div className="pointer-events-none absolute inset-0 z-[5] bg-gradient-to-r from-background via-background/90 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+              <div className="relative z-20 grid w-full items-center gap-4 md:grid-cols-[5rem_1fr_auto] md:gap-8">
                 <p className="font-display text-3xl text-navy/25 transition-transform duration-500 group-hover:-translate-y-1 group-hover:text-brand">
                   {item.n}
                 </p>
@@ -39,7 +39,9 @@ export function Services() {
                   <h3 className="font-display text-2xl font-semibold tracking-tight text-navy sm:text-3xl">
                     {item.title}
                   </h3>
-                  <p className="mt-2 max-w-xl text-sm text-muted-foreground sm:text-base">{item.text}</p>
+                  <p className="mt-2 max-w-xl text-sm text-muted-foreground sm:text-base">
+                    {item.text}
+                  </p>
                 </div>
                 <span className="inline-flex items-center gap-2 text-sm font-medium text-navy">
                   Explore Service

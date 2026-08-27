@@ -23,12 +23,16 @@ export function Navbar() {
       <div
         className={cn(
           "border-b bg-white transition-all duration-500",
-          scrolled ? "border-border/80 shadow-[0_8px_30px_-18px_rgb(15_23_42/0.25)] backdrop-blur-xl" : "border-transparent",
+          scrolled
+            ? "border-border/80 shadow-[0_8px_30px_-18px_rgb(15_23_42/0.25)] backdrop-blur-xl"
+            : "border-transparent",
         )}
       >
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6">
           <a href="#home" className="hero-fade leading-none">
-            <span className="block text-[15px] font-semibold tracking-[0.22em] text-navy">AUTO POINT</span>
+            <span className="block text-[15px] font-semibold tracking-[0.22em] text-navy">
+              AUTO POINT
+            </span>
             <span className="mt-1 block text-[9px] tracking-[0.18em] text-muted-foreground">
               MULTI BRAND CAR SERVICE CENTER
             </span>
@@ -84,7 +88,11 @@ export function Navbar() {
               </li>
             ))}
             <li className="py-3">
-              <a href="#booking" onClick={() => setOpen(false)} className="text-sm font-medium text-brand">
+              <a
+                href="#booking"
+                onClick={() => setOpen(false)}
+                className="text-sm font-medium text-brand"
+              >
                 Book Service →
               </a>
             </li>

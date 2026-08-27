@@ -12,7 +12,7 @@ export function Hero() {
             Multi-Brand Automotive Care
           </p>
           <h1
-            className="hero-rise mt-5 font-display text-5xl leading-[0.95] font-semibold tracking-tight text-navy sm:text-6xl lg:text-7xl"
+            className="hero-rise mt-5 font-display text-5xl leading-[0.95] font-semibold tracking-tight text-navy uppercase sm:text-6xl lg:text-7xl"
             style={{ animationDelay: "120ms" }}
           >
             Complete
@@ -75,7 +75,9 @@ export function Hero() {
               />
             </div>
             <div className="animate-float absolute -bottom-4 left-4 rounded-2xl bg-white px-5 py-4 shadow-[0_16px_40px_-20px_rgb(15_23_42/0.28)] sm:left-6">
-              <p className="text-[10px] tracking-[0.2em] text-muted-foreground uppercase">Car Service</p>
+              <p className="text-[10px] tracking-[0.2em] text-muted-foreground uppercase">
+                Car Service
+              </p>
               <p className="mt-1 text-sm font-medium text-navy">Professional Care</p>
             </div>
             <div

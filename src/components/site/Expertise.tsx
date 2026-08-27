@@ -37,7 +37,9 @@ export function Expertise() {
               <br />
               Professional Attention.
             </h2>
-            <p className="mt-5 text-white/75">Experienced hands. Proper care. Clear communication.</p>
+            <p className="mt-5 text-white/75">
+              Experienced hands. Proper care. Clear communication.
+            </p>
           </div>
         </div>
       </div>

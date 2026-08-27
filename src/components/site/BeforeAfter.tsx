@@ -94,7 +94,11 @@ function Compare({
         if (e.buttons) move(e.clientX);
       }}
     >
-      <img src={pair.after} alt={pair.afterAlt} className="absolute inset-0 h-full w-full object-cover" />
+      <img
+        src={pair.after}
+        alt={pair.afterAlt}
+        className="absolute inset-0 h-full w-full object-cover"
+      />
       <img
         src={pair.before}
         alt={pair.beforeAlt}

@@ -13,7 +13,9 @@ export function FinalCta() {
             <br />
             Our Responsibility.
           </h2>
-          <p className="mt-5 text-lg text-muted-foreground">Book your next service with Auto Point.</p>
+          <p className="mt-5 text-lg text-muted-foreground">
+            Book your next service with Auto Point.
+          </p>
           <div className="mt-10 flex flex-wrap justify-center gap-3">
             <Button
               asChild
