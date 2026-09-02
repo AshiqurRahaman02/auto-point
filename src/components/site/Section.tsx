@@ -19,7 +19,7 @@ export function SectionHeading({
       className={cn("reveal max-w-2xl", align === "center" ? "mx-auto text-center" : "text-left")}
     >
       {eyebrow ? (
-        <span className="inline-flex items-center rounded-full bg-accent/10 px-3 py-1 text-xs font-bold tracking-widest text-accent uppercase">
+        <span className="inline-flex items-center rounded-full bg-brand/10 px-3 py-1 text-xs font-bold tracking-widest text-brand uppercase">
           {eyebrow}
         </span>
       ) : null}

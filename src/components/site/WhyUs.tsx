@@ -1,22 +1,21 @@
-import { IMG, WHY } from "@/lib/site";
+import mechanicsSuv from "@/assets/gallery/mechanics-repairing-suv.jpg";
+import { WHY } from "@/lib/site";
 
 export function WhyUs() {
   return (
     <section id="why" className="bg-background py-20 sm:py-24">
-      <div className="mx-auto grid max-w-7xl items-stretch gap-10 px-4 sm:px-6 lg:grid-cols-12">
-        <div className="reveal lg:col-span-6">
-          <div className="overflow-hidden rounded-3xl shadow-[0_24px_80px_-28px_rgb(15_23_42/0.2)]">
-            <img
-              src={IMG.mechanic}
-              alt="Technician working in the engine bay"
-              loading="lazy"
-              className="aspect-[4/5] w-full object-cover lg:aspect-auto lg:h-full lg:min-h-[640px]"
-            />
-          </div>
+      <div className="mx-auto grid max-w-7xl items-stretch gap-12 px-4 sm:px-6 lg:grid-cols-12">
+        <div className="reveal overflow-hidden lg:col-span-6">
+          <img
+            src={mechanicsSuv}
+            alt="Mechanics at Auto Point working on a car"
+            loading="lazy"
+            className="aspect-[4/5] w-full object-cover lg:aspect-auto lg:h-full lg:min-h-[560px]"
+          />
         </div>
         <div className="flex flex-col justify-center lg:col-span-6 lg:pl-8">
           <h2 className="reveal font-display text-4xl font-semibold tracking-tight text-navy sm:text-5xl">
-            More Than Just a Workshop.
+            A trusted local workshop — not a dealership pitch.
           </h2>
           <ul className="mt-10">
             {WHY.map((item, i) => (
@@ -25,7 +24,7 @@ export function WhyUs() {
                 className="reveal border-t border-border py-6 last:border-b"
                 style={{ "--reveal-delay": `${i * 80}ms` } as React.CSSProperties}
               >
-                <p className="text-sm font-semibold tracking-[0.12em] text-navy">
+                <p className="text-base font-semibold text-navy">
                   <span className="text-brand">{item.n}</span>
                   <span className="mx-2 text-navy/30">—</span>
                   {item.title}

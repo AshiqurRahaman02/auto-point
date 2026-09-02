@@ -13,6 +13,9 @@ export function Faq() {
         <h2 className="reveal font-display text-4xl font-semibold tracking-tight text-navy sm:text-5xl">
           Questions, answered.
         </h2>
+        <p className="reveal mt-3 text-muted-foreground">
+          Short answers. For anything else — Book or Call.
+        </p>
         <Accordion type="single" collapsible className="reveal mt-10">
           {FAQS.map((item, i) => (
             <AccordionItem key={item.q} value={`q-${i}`} className="border-border">

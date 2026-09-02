@@ -19,7 +19,7 @@ const buttonVariants = cva(
         brand:
           "bg-gradient-brand text-brand-foreground shadow-glow hover:-translate-y-0.5 hover:brightness-105 transition-smooth font-semibold",
         electric:
-          "bg-accent text-accent-foreground shadow-soft hover:-translate-y-0.5 hover:bg-accent/90 transition-smooth font-semibold",
+          "bg-navy text-white shadow-soft hover:-translate-y-0.5 hover:bg-navy/90 transition-smooth font-semibold",
         heroGhost:
           "glass-panel text-primary-foreground hover:-translate-y-0.5 hover:bg-background/20 transition-smooth font-semibold",
         outlineBrand:

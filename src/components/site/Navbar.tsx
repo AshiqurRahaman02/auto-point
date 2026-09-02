@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, Phone, X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { NAV } from "@/lib/site";
+import { NAV, SITE } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 export function Navbar() {
@@ -12,29 +12,41 @@ export function Navbar() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12);
+    const onScroll = () => setScrolled(window.scrollY > 24);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const light = scrolled || open;
+
   return (
     <header className="fixed inset-x-0 top-0 z-50">
       <div
         className={cn(
-          "border-b bg-white transition-all duration-500",
-          scrolled
-            ? "border-border/80 shadow-[0_8px_30px_-18px_rgb(15_23_42/0.25)] backdrop-blur-xl"
-            : "border-transparent",
+          "border-b transition-all duration-500",
+          light
+            ? "border-border/80 bg-white/90 shadow-[0_8px_30px_-18px_rgb(15_23_42/0.25)] backdrop-blur-xl"
+            : "border-transparent bg-white/5 backdrop-blur-md",
         )}
       >
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6">
-          <a href="#home" className="hero-fade leading-none">
-            <span className="block text-[15px] font-semibold tracking-[0.22em] text-navy">
-              AUTO POINT
+          <a href="#home" className="leading-none">
+            <span
+              className={cn(
+                "block text-lg font-semibold",
+                light ? "text-navy" : "text-white",
+              )}
+            >
+              Auto Point
             </span>
-            <span className="mt-1 block text-[9px] tracking-[0.18em] text-muted-foreground">
-              MULTI BRAND CAR SERVICE CENTER
+            <span
+              className={cn(
+                "mt-0.5 block text-xs",
+                light ? "text-muted-foreground" : "text-white/70",
+              )}
+            >
+              Multi Brand Car Service Center
             </span>
           </a>
 
@@ -43,7 +55,10 @@ export function Navbar() {
               <li key={item.href}>
                 <a
                   href={item.href}
-                  className="text-[12px] font-medium tracking-[0.08em] text-navy/70 transition-colors hover:text-brand"
+                  className={cn(
+                    "text-sm font-medium transition-colors hover:text-brand",
+                    light ? "text-navy/70" : "text-white/80",
+                  )}
                 >
                   {item.label}
                 </a>
@@ -54,13 +69,27 @@ export function Navbar() {
           <div className="flex items-center gap-2">
             <Button
               asChild
-              className="hidden h-10 rounded-full bg-brand px-5 text-xs tracking-[0.12em] text-brand-foreground hover:-translate-y-0.5 hover:bg-brand/90 lg:inline-flex"
+              variant="outline"
+              className={cn(
+                "hidden h-10 rounded-none px-4 text-sm lg:inline-flex",
+                light
+                  ? "border-navy/15 bg-transparent text-navy"
+                  : "border-white/25 bg-transparent text-white hover:bg-white/10 hover:text-white",
+              )}
             >
-              <a href="#booking">Book Service →</a>
+              <a href={SITE.telHref}>
+                <Phone className="size-3.5" /> Call
+              </a>
+            </Button>
+            <Button
+              asChild
+              className="hidden h-10 rounded-none bg-brand px-5 text-sm font-semibold text-brand-foreground hover:bg-brand/90 lg:inline-flex"
+            >
+              <a href="#booking">Book</a>
             </Button>
             <button
               type="button"
-              className="grid size-10 place-items-center text-navy xl:hidden"
+              className={cn("grid size-10 place-items-center xl:hidden", light ? "text-navy" : "text-white")}
               aria-label="Menu"
               onClick={() => setOpen((v) => !v)}
             >
@@ -71,8 +100,8 @@ export function Navbar() {
 
         <div
           className={cn(
-            "overflow-hidden bg-white xl:hidden",
-            open ? "max-h-[28rem] border-t border-border" : "max-h-0",
+            "overflow-hidden xl:hidden",
+            open ? "max-h-[36rem] border-t border-border bg-white" : "max-h-0",
           )}
         >
           <ul className="px-4 py-3">
@@ -81,19 +110,18 @@ export function Navbar() {
                 <a
                   href={item.href}
                   onClick={() => setOpen(false)}
-                  className="block py-3 text-sm tracking-[0.08em]"
+                  className="block py-3 text-sm tracking-[0.08em] text-navy"
                 >
                   {item.label}
                 </a>
               </li>
             ))}
-            <li className="py-3">
-              <a
-                href="#booking"
-                onClick={() => setOpen(false)}
-                className="text-sm font-medium text-brand"
-              >
-                Book Service →
+            <li className="flex gap-4 py-3">
+              <a href={SITE.telHref} className="text-sm font-medium text-navy">
+                Call
+              </a>
+              <a href="#booking" onClick={() => setOpen(false)} className="text-sm font-medium text-brand">
+                Book
               </a>
             </li>
           </ul>

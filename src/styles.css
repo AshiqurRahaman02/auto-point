@@ -5,8 +5,10 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --shadow-soft: 0 24px 80px -28px rgb(15 23 42 / 18%);
+  --shadow-glow: 0 12px 28px -10px rgb(196 163 90 / 0.45);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -56,15 +58,15 @@
   --muted-foreground: #6b7280;
   --accent: #f3f4f6;
   --accent-foreground: #171717;
-  --brand: #e85d04;
-  --brand-foreground: #ffffff;
+  --brand: #c4a35a;
+  --brand-foreground: #0f172a;
   --navy: #0f172a;
   --steel: #6b7280;
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: #ffffff;
   --border: #e5e7eb;
   --input: #e5e7eb;
-  --ring: #e85d04;
+  --ring: #c4a35a;
 
   --ease-cinematic: cubic-bezier(0.22, 1, 0.36, 1);
   --shadow-soft: 0 24px 80px -28px rgb(15 23 42 / 18%);
@@ -85,17 +87,23 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.6;
     -webkit-font-smoothing: antialiased;
   }
 
   .font-display {
     font-family: var(--font-display);
-    letter-spacing: -0.03em;
+    letter-spacing: -0.015em;
   }
 }
 
 @utility transition-smooth {
   transition: all 450ms var(--ease-cinematic);
+}
+
+@utility bg-gradient-brand {
+  background-image: linear-gradient(135deg, #d4b36a, #c4a35a 42%, #a8883c);
 }
 
 @layer utilities {
@@ -122,6 +130,7 @@
     .animate-marquee,
     .animate-status,
     .animate-wa,
+    .animate-ken-hero,
     .animate-ken {
       animation: none !important;
       transition: none !important;
@@ -141,6 +150,16 @@
   }
   to {
     transform: scale(1);
+  }
+}
+
+@keyframes ken-loop {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.08);
   }
 }
 
@@ -199,7 +218,7 @@
 @keyframes status-glow {
   0%,
   100% {
-    box-shadow: 0 0 0 0 rgb(232 93 4 / 0.45);
+    box-shadow: 0 0 0 0 rgb(196 163 90 / 0.45);
   }
   70% {
     box-shadow: 0 0 0 10px transparent;
@@ -218,6 +237,10 @@
 
 .animate-ken {
   animation: ken 16s var(--ease-cinematic) forwards;
+}
+
+.animate-ken-hero {
+  animation: ken-loop 22s ease-in-out infinite;
 }
 
 .hero-fade {
