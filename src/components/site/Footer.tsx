@@ -1,4 +1,5 @@
 import { locations, NAV, SITE } from "@/lib/site";
+import { NavLink } from "@/components/site/Navbar";
 
 export function Footer() {
   return (
@@ -19,9 +20,7 @@ export function Footer() {
         <ul className="space-y-2 text-sm text-muted-foreground">
           {NAV.map((item) => (
             <li key={item.href}>
-              <a href={item.href} className="hover:text-brand">
-                {item.label}
-              </a>
+              <NavLink item={item} className="hover:text-brand" />
             </li>
           ))}
         </ul>

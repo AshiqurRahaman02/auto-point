@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useEffect } from "react";
 
 import { Booking } from "@/components/site/Booking";
 import { Contact } from "@/components/site/Contact";
@@ -15,13 +16,32 @@ import { Tools } from "@/components/site/Tools";
 import { WhyUs } from "@/components/site/WhyUs";
 import { Workshop } from "@/components/site/Workshop";
 import { useScrollReveal } from "@/hooks/use-reveal";
+import { SEO } from "@/lib/site";
 
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: SEO.title },
+      { name: "description", content: SEO.description },
+      { property: "og:title", content: SEO.title },
+      { property: "og:description", content: SEO.description },
+    ],
+  }),
   component: Index,
 });
 
 function Index() {
   useScrollReveal();
+  useEffect(() => {
+    const stored = sessionStorage.getItem("autopoint-hash");
+    const id = stored || window.location.hash.replace("#", "");
+    if (stored) sessionStorage.removeItem("autopoint-hash");
+    if (!id) return;
+    const t = window.setTimeout(() => {
+      document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    }, 320);
+    return () => window.clearTimeout(t);
+  }, []);
 
   return (
     <>

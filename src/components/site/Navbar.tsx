@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Link, useRouterState } from "@tanstack/react-router";
 import { Menu, Phone, X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -10,6 +11,7 @@ import { cn } from "@/lib/utils";
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -31,7 +33,7 @@ export function Navbar() {
         )}
       >
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6">
-          <a href="#home" className="leading-none">
+          <Link to="/" className="leading-none">
             <span
               className={cn(
                 "block text-lg font-semibold",
@@ -48,20 +50,22 @@ export function Navbar() {
             >
               Multi Brand Car Service Center
             </span>
-          </a>
+          </Link>
 
-          <ul className="hidden items-center gap-6 xl:flex">
+          <ul className="hidden items-center gap-5 xl:flex">
             {NAV.map((item) => (
               <li key={item.href}>
-                <a
-                  href={item.href}
+                <NavLink
+                  item={item}
                   className={cn(
                     "text-sm font-medium transition-colors hover:text-brand",
-                    light ? "text-navy/70" : "text-white/80",
+                    isNavActive(item, pathname)
+                      ? "text-brand"
+                      : light
+                        ? "text-navy/70"
+                        : "text-white/80",
                   )}
-                >
-                  {item.label}
-                </a>
+                />
               </li>
             ))}
           </ul>
@@ -101,19 +105,20 @@ export function Navbar() {
         <div
           className={cn(
             "overflow-hidden xl:hidden",
-            open ? "max-h-[36rem] border-t border-border bg-white" : "max-h-0",
+            open ? "max-h-[80vh] overflow-y-auto border-t border-border bg-white" : "max-h-0",
           )}
         >
           <ul className="px-4 py-3">
             {NAV.map((item) => (
               <li key={item.href}>
-                <a
-                  href={item.href}
+                <NavLink
+                  item={item}
                   onClick={() => setOpen(false)}
-                  className="block py-3 text-sm tracking-[0.08em] text-navy"
-                >
-                  {item.label}
-                </a>
+                  className={cn(
+                    "block py-3 text-sm tracking-[0.08em]",
+                    isNavActive(item, pathname) ? "text-brand" : "text-navy",
+                  )}
+                />
               </li>
             ))}
             <li className="flex gap-4 py-3">
@@ -128,5 +133,62 @@ export function Navbar() {
         </div>
       </div>
     </header>
+  );
+}
+
+type NavItem = (typeof NAV)[number];
+
+function isNavActive(item: NavItem, pathname: string) {
+  if (item.href === "/pdi") return pathname === "/pdi";
+  if (item.label === "Home") return pathname === "/";
+  return false;
+}
+
+export function NavLink({
+  item,
+  className,
+  onClick,
+}: {
+  item: NavItem;
+  className?: string;
+  onClick?: () => void;
+}) {
+  if (item.href === "/pdi") {
+    return (
+      <Link to="/pdi" className={className} onClick={onClick}>
+        {item.label}
+      </Link>
+    );
+  }
+  if (item.href === "/") {
+    return (
+      <Link to="/" className={className} onClick={onClick}>
+        {item.label}
+      </Link>
+    );
+  }
+  if (item.href.startsWith("/#")) {
+    const hash = item.href.slice(2);
+    return (
+      <Link
+        to="/"
+        className={className}
+        onClick={(e) => {
+          sessionStorage.setItem("autopoint-hash", hash);
+          onClick?.();
+          if (window.location.pathname === "/") {
+            e.preventDefault();
+            document.getElementById(hash)?.scrollIntoView({ behavior: "smooth" });
+          }
+        }}
+      >
+        {item.label}
+      </Link>
+    );
+  }
+  return (
+    <a href={item.href} className={className} onClick={onClick}>
+      {item.label}
+    </a>
   );
 }

@@ -50,6 +50,15 @@ export function Services() {
                   Book this
                   <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5" />
                 </button>
+                {item.id === "pdi" ? (
+                  <a
+                    href="/pdi"
+                    className="mt-3 inline-flex items-center gap-2 text-sm font-medium text-brand"
+                  >
+                    Full PDI page
+                    <ArrowUpRight className="size-4" />
+                  </a>
+                ) : null}
               </div>
               <div className="overflow-hidden lg:col-span-6">
                 <img

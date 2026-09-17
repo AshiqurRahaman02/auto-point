@@ -262,7 +262,7 @@ export const FAQS = [
   },
   {
     q: "What is a pre-purchase inspection?",
-    a: "Before you buy a used car, we check body, paint, engine, electronics and undercarriage, then share a written report so you can decide with a clear picture.",
+    a: "Before you buy a used or new car, we check body, paint, engine, electronics and papers, then share a written report. See the full PDI page for the 280+ point checklist, pricing, and WhatsApp booking.",
   },
   {
     q: "How do I book?",
@@ -287,14 +287,15 @@ export const FAQS = [
 ] as const;
 
 export const NAV = [
-  { label: "Home", href: "#home" },
-  { label: "Services", href: "#services" },
-  { label: "Tools", href: "#tools" },
+  { label: "Home", href: "/" },
+  { label: "PDI", href: "/pdi" },
+  { label: "Services", href: "/#services" },
+  { label: "Tools", href: "/#tools" },
   { label: "Book", href: "#booking" },
-  { label: "Cars", href: "#cars" },
-  { label: "Kits", href: "#kits" },
-  { label: "Reviews", href: "#reviews" },
-  { label: "Contact", href: "#contact" },
+  { label: "Cars", href: "/#cars" },
+  { label: "Kits", href: "/#kits" },
+  { label: "Reviews", href: "/#reviews" },
+  { label: "Contact", href: "/#contact" },
 ] as const;
 
 export const VEHICLE_TYPES = [
