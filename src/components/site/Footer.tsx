@@ -1,56 +1,42 @@
-import { MessageCircle, Navigation } from "lucide-react";
-
-import { mapsDirections, NAV, SITE, whatsappLink } from "@/lib/site";
+import { locations, NAV, SITE } from "@/lib/site";
+import { NavLink } from "@/components/site/Navbar";
 
 export function Footer() {
   return (
-    <footer className="border-t border-white/10 bg-background pb-24 md:pb-10">
+    <footer className="border-t border-border bg-white pb-20 md:pb-10">
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 md:grid-cols-3">
         <div>
-          <p className="font-display text-lg tracking-[0.2em]">AUTO POINT</p>
-          <p className="mt-1 text-[10px] tracking-[0.22em] text-muted-foreground">
-            MULTI BRAND CAR SERVICE CENTER
-          </p>
-        </div>
-        <ul className="space-y-2 text-sm text-foreground/70">
-          {NAV.map((item) => (
-            <li key={item.href}>
-              <a href={item.href} className="hover:text-brand">
-                {item.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-        <div className="space-y-3 text-sm text-foreground/70">
-          <p>
+          <p className="font-display text-lg font-semibold text-navy">Auto Point</p>
+          <p className="mt-1 text-sm text-muted-foreground">Multi Brand Car Service Center</p>
+          <div className="mt-6 flex gap-4 text-sm">
             <a href={SITE.telHref} className="hover:text-brand">
-              {SITE.phonePretty}
+              Call
             </a>
-          </p>
-          <p>{SITE.addressShort}</p>
-          <div className="flex gap-4 pt-2">
-            <a
-              href={whatsappLink()}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-brand"
-              aria-label="WhatsApp"
-            >
-              <MessageCircle className="size-5" />
-            </a>
-            <a
-              href={mapsDirections}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-brand"
-              aria-label="Google Maps"
-            >
-              <Navigation className="size-5" />
+            <a href="#booking" className="hover:text-brand">
+              Book
             </a>
           </div>
         </div>
+        <ul className="space-y-2 text-sm text-muted-foreground">
+          {NAV.map((item) => (
+            <li key={item.href}>
+              <NavLink item={item} className="hover:text-brand" />
+            </li>
+          ))}
+        </ul>
+        <div className="space-y-4 text-sm text-muted-foreground">
+          {locations.map((shop) => (
+            <p key={shop.name}>
+              <span className="block font-medium text-navy">{shop.name}</span>
+              {shop.address}
+              <a href={`tel:+${shop.phoneRaw}`} className="mt-1 block hover:text-brand">
+                {shop.phone}
+              </a>
+            </p>
+          ))}
+        </div>
       </div>
-      <p className="border-t border-white/10 px-4 py-6 text-center text-xs text-muted-foreground">
+      <p className="border-t border-border px-4 py-6 text-center text-xs text-muted-foreground">
         © 2026 Auto Point Multi Brand Car Service Center. All rights reserved.
       </p>
     </footer>

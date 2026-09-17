@@ -80,7 +80,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: SEO.title },
       { name: "description", content: SEO.description },
-      { name: "theme-color", content: "#111318" },
+      { name: "theme-color", content: "#F7F8FA" },
       { name: "geo.region", content: "IN-RJ" },
       { name: "geo.placename", content: "Beelwa, Jaipur" },
       { property: "og:title", content: SEO.title },
@@ -104,7 +104,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Outfit:wght@400;500;600&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;1,14..32,400&display=swap",
       },
     ],
   }),

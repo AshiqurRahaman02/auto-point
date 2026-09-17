@@ -5,7 +5,7 @@ export function SectionHeading({
   eyebrow,
   title,
   description,
-  align = "left",
+  align = "center",
   tone = "light",
 }: {
   eyebrow?: string;
@@ -19,18 +19,13 @@ export function SectionHeading({
       className={cn("reveal max-w-2xl", align === "center" ? "mx-auto text-center" : "text-left")}
     >
       {eyebrow ? (
-        <span
-          className={cn(
-            "text-[11px] font-semibold tracking-[0.22em] uppercase",
-            tone === "dark" ? "text-brand" : "text-brand",
-          )}
-        >
+        <span className="inline-flex items-center rounded-full bg-brand/10 px-3 py-1 text-xs font-bold tracking-widest text-brand uppercase">
           {eyebrow}
         </span>
       ) : null}
       <h2
         className={cn(
-          "mt-3 font-display text-4xl font-bold tracking-wide uppercase sm:text-5xl",
+          "mt-4 font-display text-3xl font-bold sm:text-4xl",
           tone === "dark" ? "text-primary-foreground" : "text-foreground",
         )}
       >
@@ -39,7 +34,7 @@ export function SectionHeading({
       {description ? (
         <p
           className={cn(
-            "mt-4 max-w-xl text-base leading-relaxed",
+            "mt-4 text-base",
             tone === "dark" ? "text-primary-foreground/70" : "text-muted-foreground",
           )}
         >
@@ -60,7 +55,7 @@ export function Section({
   className?: string;
 }) {
   return (
-    <section id={id} className={cn("py-20 sm:py-24", className)}>
+    <section id={id} className={cn("py-20 sm:py-28", className)}>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">{children}</div>
     </section>
   );

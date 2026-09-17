@@ -1,36 +1,38 @@
-import { IMG, WHY } from "@/lib/site";
-
-const BACKGROUNDS = [IMG.bay, IMG.service, IMG.underCar, IMG.inspection] as const;
+import mechanicsSuv from "@/assets/gallery/mechanics-repairing-suv.jpg";
+import { WHY } from "@/lib/site";
 
 export function WhyUs() {
   return (
-    <section className="relative overflow-hidden bg-background py-24">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,oklch(0.64_0.21_38/0.12),transparent_55%)]" />
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6">
-        <div className="reveal">
-          <p className="text-[11px] tracking-[0.28em] text-brand uppercase">Why Auto Point</p>
-          <h2 className="mt-3 font-display text-4xl sm:text-6xl">More Than a Workshop.</h2>
+    <section id="why" className="bg-background py-20 sm:py-24">
+      <div className="mx-auto grid max-w-7xl items-stretch gap-12 px-4 sm:px-6 lg:grid-cols-12">
+        <div className="reveal overflow-hidden lg:col-span-6">
+          <img
+            src={mechanicsSuv}
+            alt="Mechanics at Auto Point working on a car"
+            loading="lazy"
+            className="aspect-[4/5] w-full object-cover lg:aspect-auto lg:h-full lg:min-h-[560px]"
+          />
         </div>
-        <div className="mt-12 grid gap-px bg-white/10 md:grid-cols-2">
-          {WHY.map((item, i) => (
-            <article
-              key={item.title}
-              className="group reveal relative min-h-[260px] overflow-hidden bg-background p-8 sm:p-12"
-              style={{ "--reveal-delay": `${i * 80}ms` } as React.CSSProperties}
-            >
-              <img
-                src={BACKGROUNDS[i]}
-                alt=""
-                loading="lazy"
-                className="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-700 group-hover:opacity-25"
-              />
-              <div className="relative">
-                <p className="font-display text-6xl text-white/10">0{i + 1}</p>
-                <h3 className="mt-4 font-display text-3xl">{item.title}</h3>
-                <p className="mt-3 max-w-sm text-muted-foreground">{item.text}</p>
-              </div>
-            </article>
-          ))}
+        <div className="flex flex-col justify-center lg:col-span-6 lg:pl-8">
+          <h2 className="reveal font-display text-4xl font-semibold tracking-tight text-navy sm:text-5xl">
+            A trusted local workshop — not a dealership pitch.
+          </h2>
+          <ul className="mt-10">
+            {WHY.map((item, i) => (
+              <li
+                key={item.n}
+                className="reveal border-t border-border py-6 last:border-b"
+                style={{ "--reveal-delay": `${i * 80}ms` } as React.CSSProperties}
+              >
+                <p className="text-base font-semibold text-navy">
+                  <span className="text-brand">{item.n}</span>
+                  <span className="mx-2 text-navy/30">—</span>
+                  {item.title}
+                </p>
+                <p className="mt-2 text-sm text-muted-foreground">{item.text}</p>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </section>

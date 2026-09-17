@@ -1,70 +1,73 @@
-import { useEffect, useRef } from "react";
+import bayCars from "@/assets/gallery/bay-cars-in-service.jpg";
+import bayInnova from "@/assets/gallery/bay-innova-wagonr.jpg";
+import baySwift from "@/assets/gallery/bay-swift-on-lift.jpg";
+import exteriorSign from "@/assets/gallery/exterior-auto-point-sign.jpg";
+import exteriorCastrol from "@/assets/gallery/exterior-castrol-service.jpg";
+import exteriorRamp from "@/assets/gallery/exterior-ramp-entrance.jpg";
+import exteriorStreet from "@/assets/gallery/exterior-street-front.jpg";
+import hatchbackRepair from "@/assets/gallery/hatchback-body-repair.jpg";
+import partsStore from "@/assets/gallery/interior-parts-store.jpg";
+import mechanicsSuv from "@/assets/gallery/mechanics-repairing-suv.jpg";
+import office from "@/assets/gallery/office-reception.jpg";
+import yardSuvs from "@/assets/gallery/yard-suvs-under-shade.jpg";
 
-import { IMG } from "@/lib/site";
+const FEATURED = {
+  src: exteriorSign,
+  alt: "Auto Point workshop with cars in the yard",
+};
 
-const FLOATS = ["Multi-Brand Service", "Car Repair", "Body Work", "Car Care"];
+const TILES = [
+  { src: exteriorCastrol, alt: "Auto Point Castrol Service shopfront" },
+  { src: exteriorStreet, alt: "Auto Point street front on the main road" },
+  { src: exteriorRamp, alt: "Entrance ramp into the Auto Point bay" },
+  { src: yardSuvs, alt: "SUVs in the outdoor service yard" },
+  { src: bayCars, alt: "Cars being serviced inside the workshop" },
+  { src: baySwift, alt: "Swift on the hydraulic lift" },
+  { src: bayInnova, alt: "Innova and WagonR in the service bay" },
+  { src: mechanicsSuv, alt: "Mechanics repairing an SUV" },
+  { src: hatchbackRepair, alt: "Hatchback front-end repair in progress" },
+  { src: partsStore, alt: "Genuine parts and waiting area" },
+  { src: office, alt: "Workshop office and reception" },
+] as const;
 
 export function Workshop() {
-  const imgRef = useRef<HTMLImageElement>(null);
-
-  useEffect(() => {
-    const el = imgRef.current;
-    if (!el) return;
-    const onScroll = () => {
-      const rect = el.getBoundingClientRect();
-      const offset = Math.max(-24, Math.min(24, (window.innerHeight / 2 - rect.top) * 0.06));
-      el.style.transform = `translateY(${offset}px) scale(1.06)`;
-    };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
   return (
-    <section id="workshop" className="bg-background py-24">
+    <section id="workshop" className="bg-background py-20 sm:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <div className="reveal max-w-2xl">
-          <p className="text-[11px] tracking-[0.28em] text-brand uppercase">Our workshop</p>
-          <h2 className="mt-3 font-display text-4xl sm:text-6xl">Welcome to Auto Point.</h2>
+          <h2 className="font-display text-4xl font-semibold text-navy sm:text-5xl">
+            This is where your car gets cared for.
+          </h2>
           <p className="mt-4 text-muted-foreground">
-            A local workshop built around complete automotive care.
+            Two workshops — Tonk Road and Jagatpura. Walk in, see the bay, talk to the team.
           </p>
         </div>
 
-        <div className="relative mt-12 overflow-hidden border border-white/10">
-          <img
-            ref={imgRef}
-            src="/og-workshop.jpg"
-            alt="Auto Point workshop floor — technician working on engine components"
-            loading="lazy"
-            className="aspect-[16/9] w-full object-cover will-change-transform lg:aspect-[21/9]"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-transparent to-transparent" />
-          <div className="absolute bottom-4 left-4 flex flex-wrap gap-2 sm:bottom-8 sm:left-8">
-            {FLOATS.map((label) => (
-              <span
-                key={label}
-                className="glass-card px-3 py-2 text-[10px] tracking-[0.16em] uppercase"
-              >
-                {label}
-              </span>
-            ))}
-          </div>
-        </div>
+        <div className="mt-12 grid gap-3 sm:gap-4">
+          <figure className="reveal overflow-hidden">
+            <img
+              src={FEATURED.src}
+              alt={FEATURED.alt}
+              loading="lazy"
+              className="aspect-[16/9] w-full object-cover object-[center_40%] sm:aspect-[2/1]"
+            />
+          </figure>
 
-        <div className="mt-4 grid gap-4 md:grid-cols-2">
-          <img
-            src={IMG.undercarriage}
-            alt="Technician working under a vehicle during mechanical repair"
-            loading="lazy"
-            className="aspect-[16/10] w-full object-cover"
-          />
-          <div className="flex flex-col justify-center border border-white/10 p-8">
-            <p className="text-sm leading-relaxed text-muted-foreground">
-              This is the real workshop — the place where the work happens. The website is built to
-              match the standard of care we want every visit to feel like: clear, professional and
-              easy to book.
-            </p>
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3">
+            {TILES.map((item, i) => (
+              <figure
+                key={item.src}
+                className="reveal overflow-hidden"
+                style={{ "--reveal-delay": `${(i + 1) * 50}ms` } as React.CSSProperties}
+              >
+                <img
+                  src={item.src}
+                  alt={item.alt}
+                  loading="lazy"
+                  className="aspect-[4/3] w-full object-cover"
+                />
+              </figure>
+            ))}
           </div>
         </div>
       </div>

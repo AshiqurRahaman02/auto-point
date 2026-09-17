@@ -1,48 +1,74 @@
+"use client";
+
 import { ArrowUpRight } from "lucide-react";
 
-import { SERVICES } from "@/lib/site";
+import { goToBooking, SERVICES } from "@/lib/site";
 
 export function Services() {
   return (
-    <section id="services" className="bg-background py-24">
+    <section id="services" className="bg-white py-20 sm:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <div className="reveal max-w-2xl">
-          <p className="text-[11px] tracking-[0.28em] text-brand uppercase">Services</p>
-          <h2 className="mt-3 font-display text-4xl sm:text-6xl">Everything Your Car Needs.</h2>
+          <h2 className="font-display text-4xl font-semibold tracking-tight text-navy sm:text-5xl">
+            Everything Your Car Needs.
+          </h2>
           <p className="mt-4 text-muted-foreground">
-            From routine maintenance to major repairs, our workshop brings essential car care
-            services together in one place.
+            Three ways we help — repair, inspect before you buy, or pick the car up from your door.
           </p>
         </div>
 
-        <div className="hide-scrollbar mt-12 flex gap-4 overflow-x-auto pb-4 md:grid md:grid-cols-2 md:overflow-visible lg:grid-cols-4">
+        <div className="mt-14">
           {SERVICES.map((item, i) => (
-            <a
-              key={item.n}
-              href="#booking"
-              className="group reveal relative min-h-[280px] w-[78vw] shrink-0 overflow-hidden border border-white/10 bg-surface md:w-auto"
-              style={{ "--reveal-delay": `${i * 60}ms` } as React.CSSProperties}
+            <article
+              key={item.id}
+              className="reveal group grid items-center gap-6 border-t border-border py-10 last:border-b lg:grid-cols-12 lg:gap-10"
+              style={{ "--reveal-delay": `${i * 80}ms` } as React.CSSProperties}
             >
-              <img
-                src={item.image}
-                alt=""
-                loading="lazy"
-                className="absolute inset-0 h-full w-full object-cover opacity-0 transition-all duration-700 group-hover:scale-105 group-hover:opacity-40"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-              <div className="relative flex h-full flex-col justify-between p-6">
-                <p className="font-display text-4xl text-brand/80">{item.n}</p>
-                <div>
-                  <h3 className="font-display text-2xl">{item.title}</h3>
-                  <p className="mt-2 text-sm text-muted-foreground">{item.text}</p>
-                  <span className="mt-4 inline-flex items-center gap-2 text-xs tracking-[0.18em] text-brand uppercase">
-                    Book
-                    <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" />
-                  </span>
-                </div>
+              <p className="font-display text-3xl text-navy/20 lg:col-span-1">{item.n}</p>
+              <div className="lg:col-span-5">
+                <h3 className="font-display text-2xl font-semibold tracking-tight text-navy sm:text-3xl">
+                  {item.title}
+                </h3>
+                <p className="mt-3 max-w-md text-muted-foreground">{item.text}</p>
+                <ul className="mt-5 space-y-1.5 text-sm text-navy/80">
+                  {item.subs.map((sub) => (
+                    <li key={sub} className="flex gap-3">
+                      <span className="mt-2 h-px w-4 shrink-0 bg-brand" />
+                      {sub}
+                    </li>
+                  ))}
+                </ul>
+                <button
+                  type="button"
+                  onClick={() =>
+                    goToBooking({
+                      service: item.id === "pickup" ? item.title : `${item.title} — ${item.subs[0]}`,
+                    })
+                  }
+                  className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-navy"
+                >
+                  Book this
+                  <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+                </button>
+                {item.id === "pdi" ? (
+                  <a
+                    href="/pdi"
+                    className="mt-3 inline-flex items-center gap-2 text-sm font-medium text-brand"
+                  >
+                    Full PDI page
+                    <ArrowUpRight className="size-4" />
+                  </a>
+                ) : null}
               </div>
-              <span className="absolute inset-x-0 bottom-0 h-px origin-left scale-x-0 bg-brand transition-transform duration-500 group-hover:scale-x-100" />
-            </a>
+              <div className="overflow-hidden lg:col-span-6">
+                <img
+                  src={item.image}
+                  alt=""
+                  loading="lazy"
+                  className="aspect-[16/9] w-full object-cover transition-transform duration-700 group-hover:scale-[1.03] lg:aspect-[5/3]"
+                />
+              </div>
+            </article>
           ))}
         </div>
       </div>

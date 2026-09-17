@@ -1,28 +1,64 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
+import { ArrowUpRight, Info } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { BRANDS, SERVICE_OPTIONS, SITE, whatsappLink } from "@/lib/site";
+import {
+  BRANDS,
+  getPrefill,
+  PREFILL_EVENT,
+  SERVICE_OPTIONS,
+  SITE,
+  whatsappLink,
+  type Prefill,
+} from "@/lib/site";
+
+const fieldClass =
+  "h-12 rounded-none border-border bg-white text-navy shadow-none focus-visible:ring-brand";
 
 export function Booking() {
   const [sent, setSent] = useState(false);
+  const [pickup, setPickup] = useState(false);
+  const [infoOpen, setInfoOpen] = useState(false);
+  const [brand, setBrand] = useState("");
+  const [service, setService] = useState("");
+  const locationRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const apply = (data: Prefill) => {
+      if (data.brand) setBrand(data.brand);
+      if (data.service) {
+        setService(data.service);
+        if (data.service.toLowerCase().includes("pickup")) setPickup(true);
+      }
+    };
+    apply(getPrefill());
+    const onPrefill = (e: Event) => apply((e as CustomEvent<Prefill>).detail);
+    window.addEventListener(PREFILL_EVENT, onPrefill);
+    return () => window.removeEventListener(PREFILL_EVENT, onPrefill);
+  }, []);
 
   function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
     const name = String(data.get("name") ?? "");
     const phone = String(data.get("phone") ?? "");
-    const brand = String(data.get("brand") ?? "");
     const model = String(data.get("model") ?? "");
-    const service = String(data.get("service") ?? "");
     const date = String(data.get("date") ?? "");
     const time = String(data.get("time") ?? "");
-    const pickup = String(data.get("pickup") ?? "No");
     const notes = String(data.get("notes") ?? "").trim();
+    const location = String(data.get("location") ?? "").trim();
 
     const lines = [
       "Hello Auto Point,",
@@ -35,8 +71,9 @@ export function Booking() {
       `Service: ${service}`,
       `Preferred Date: ${date}`,
       `Preferred Time: ${time}`,
-      `Pickup Required: ${pickup}`,
+      `Pickup Required: ${pickup ? "Yes" : "No"}`,
     ];
+    if (pickup && location) lines.push(`Pickup location: ${location}`);
     if (notes) lines.push("", notes);
     lines.push("", "Please confirm availability.");
 
@@ -45,45 +82,37 @@ export function Booking() {
   }
 
   return (
-    <section id="booking" className="bg-surface py-24">
+    <section id="booking" className="bg-background py-20 sm:py-24">
       <div className="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-2">
-        <div className="reveal">
-          <p className="text-[11px] tracking-[0.28em] text-brand uppercase">Booking</p>
-          <h2 className="mt-3 font-display text-4xl sm:text-6xl">
-            Ready to Get Your Car Back in Shape?
+        <div className="reveal lg:sticky lg:top-28 lg:self-start">
+          <h2 className="font-display text-4xl font-semibold tracking-tight text-navy sm:text-5xl">
+            Book a slot. We&apos;ll take it from there.
           </h2>
-          <p className="mt-4 text-muted-foreground">
-            Submit the form and continue on WhatsApp at {SITE.phonePretty}. The workshop confirms
-            the slot after they reply.
+          <p className="mt-4 max-w-md text-muted-foreground">
+            Fill this in, then continue on WhatsApp at {SITE.whatsappPretty}. The workshop confirms
+            the time after they reply. Prefer to talk? Call {SITE.phonePretty}.
           </p>
         </div>
 
-        <form onSubmit={onSubmit} className="reveal glass-card grid gap-4 p-6 sm:p-8">
+        <form
+          onSubmit={onSubmit}
+          className="reveal grid gap-4 bg-white p-6 shadow-[0_24px_80px_-28px_rgb(15_23_42/0.12)] sm:p-8"
+        >
           <Field label="Name" htmlFor="name">
-            <Input
-              id="name"
-              name="name"
-              required
-              className="h-11 rounded-none border-white/15 bg-background/40"
-            />
+            <Input id="name" name="name" required autoComplete="name" className={fieldClass} />
           </Field>
-          <Field label="Phone Number" htmlFor="phone">
-            <Input
-              id="phone"
-              name="phone"
-              type="tel"
-              required
-              className="h-11 rounded-none border-white/15 bg-background/40"
-            />
+          <Field label="Phone" htmlFor="phone">
+            <Input id="phone" name="phone" type="tel" required autoComplete="tel" className={fieldClass} />
           </Field>
           <div className="grid gap-4 sm:grid-cols-2">
-            <Field label="Car Brand" htmlFor="brand">
+            <Field label="Car brand" htmlFor="brand">
               <select
                 id="brand"
                 name="brand"
                 required
-                defaultValue=""
-                className="flex h-11 w-full rounded-none border border-white/15 bg-background/40 px-3 text-sm"
+                value={brand}
+                onChange={(e) => setBrand(e.target.value)}
+                className={`flex w-full border px-3 text-sm ${fieldClass}`}
               >
                 <option value="" disabled>
                   Select brand
@@ -96,22 +125,18 @@ export function Booking() {
                 <option value="Other">Other</option>
               </select>
             </Field>
-            <Field label="Car Model" htmlFor="model">
-              <Input
-                id="model"
-                name="model"
-                required
-                className="h-11 rounded-none border-white/15 bg-background/40"
-              />
+            <Field label="Model" htmlFor="model">
+              <Input id="model" name="model" required placeholder="e.g. Swift, City" className={fieldClass} />
             </Field>
           </div>
-          <Field label="Required Service" htmlFor="service">
+          <Field label="Service" htmlFor="service">
             <select
               id="service"
               name="service"
               required
-              defaultValue=""
-              className="flex h-11 w-full rounded-none border border-white/15 bg-background/40 px-3 text-sm"
+              value={service}
+              onChange={(e) => setService(e.target.value)}
+              className={`flex w-full border px-3 text-sm ${fieldClass}`}
             >
               <option value="" disabled>
                 Select service
@@ -124,57 +149,113 @@ export function Booking() {
             </select>
           </Field>
           <div className="grid gap-4 sm:grid-cols-2">
-            <Field label="Preferred Date" htmlFor="date">
-              <Input
-                id="date"
-                name="date"
-                type="date"
-                required
-                className="h-11 rounded-none border-white/15 bg-background/40"
-              />
+            <Field label="Preferred date" htmlFor="date">
+              <Input id="date" name="date" type="date" required className={fieldClass} />
             </Field>
-            <Field label="Preferred Time" htmlFor="time">
-              <Input
-                id="time"
-                name="time"
-                type="time"
-                required
-                className="h-11 rounded-none border-white/15 bg-background/40"
-              />
+            <Field label="Preferred time" htmlFor="time">
+              <Input id="time" name="time" type="time" required className={fieldClass} />
             </Field>
           </div>
-          <fieldset>
-            <legend className="mb-2 text-sm font-medium">Pickup Required?</legend>
-            <div className="flex gap-6 text-sm">
-              <label className="flex items-center gap-2">
-                <input type="radio" name="pickup" value="Yes" /> Yes
-              </label>
-              <label className="flex items-center gap-2">
-                <input type="radio" name="pickup" value="No" defaultChecked /> No
-              </label>
-            </div>
-          </fieldset>
-          <Field label="Additional Message" htmlFor="notes">
+
+          <div className="flex items-center justify-between gap-3 border-y border-border py-4">
+            <label className="flex items-center gap-3 text-sm text-navy">
+              <input
+                type="checkbox"
+                checked={pickup}
+                onChange={(e) => {
+                  const on = e.target.checked;
+                  setPickup(on);
+                  if (on) {
+                    window.setTimeout(() => locationRef.current?.focus(), 50);
+                  }
+                }}
+                className="size-4 accent-brand"
+              />
+              Need doorstep pickup
+            </label>
+            <button
+              type="button"
+              onClick={() => setInfoOpen(true)}
+              className="inline-flex items-center gap-1.5 text-xs tracking-wide text-muted-foreground hover:text-navy"
+              aria-label="How pickup works"
+            >
+              <Info className="size-4" />
+              How it works
+            </button>
+          </div>
+
+          {pickup ? (
+            <Field label="Pickup location" htmlFor="location">
+              <Input
+                ref={locationRef}
+                id="location"
+                name="location"
+                required={pickup}
+                placeholder="Paste Google Maps link or lat,long"
+                className={fieldClass}
+              />
+              <p className="text-xs text-muted-foreground">
+                Example: maps.app.goo.gl/... or 26.8467, 75.8028
+              </p>
+            </Field>
+          ) : null}
+
+          <Field label="Anything else" htmlFor="notes">
             <Textarea
               id="notes"
               name="notes"
               rows={3}
-              className="rounded-none border-white/15 bg-background/40"
+              placeholder="Strange noise, accident, PDI for a used car…"
+              className="rounded-none border-border bg-white"
             />
           </Field>
           <Button
             type="submit"
-            className="mt-2 h-12 rounded-none bg-brand text-brand-foreground hover:bg-brand/90"
+            className="mt-2 h-14 rounded-none bg-brand text-base font-semibold text-brand-foreground hover:bg-brand/90"
           >
-            Book via WhatsApp
+            Book on WhatsApp <ArrowUpRight className="size-4" />
           </Button>
           {sent ? (
-            <p className="text-xs text-muted-foreground">
-              WhatsApp has opened with your booking details.
-            </p>
+            <p className="text-sm text-navy/80">WhatsApp opened with your booking details.</p>
           ) : null}
         </form>
       </div>
+
+      <Dialog open={infoOpen} onOpenChange={setInfoOpen}>
+        <DialogContent className="rounded-none sm:rounded-none">
+          <DialogHeader>
+            <DialogTitle className="font-display text-2xl">Doorstep pickup</DialogTitle>
+            <DialogDescription>
+              Share where the car is. We confirm the slot, then come to you.
+            </DialogDescription>
+          </DialogHeader>
+          <ol className="space-y-3 text-sm text-navy">
+            <li>
+              <span className="text-brand">01</span> — Tick pickup on the form
+            </li>
+            <li>
+              <span className="text-brand">02</span> — Paste a Google Maps link or latitude,longitude
+            </li>
+            <li>
+              <span className="text-brand">03</span> — We confirm on WhatsApp
+            </li>
+            <li>
+              <span className="text-brand">04</span> — Pickup, service, drop back
+            </li>
+          </ol>
+          <Button
+            type="button"
+            className="rounded-none bg-brand text-brand-foreground hover:bg-brand/90"
+            onClick={() => {
+              setPickup(true);
+              setInfoOpen(false);
+              window.setTimeout(() => locationRef.current?.focus(), 80);
+            }}
+          >
+            I&apos;ll add my location
+          </Button>
+        </DialogContent>
+      </Dialog>
     </section>
   );
 }
